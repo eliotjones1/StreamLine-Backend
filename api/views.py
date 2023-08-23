@@ -92,8 +92,12 @@ class checkInList(generics.ListAPIView):
         user_exists = CustomUser.objects.get(email=user_email)
         current = UserData.objects.get(user_id=user_exists)
         cur_list = current.media
-        if object in cur_list:
-            return Response({"Status": "true"}, status=status.HTTP_200_OK)
+        if object["id"] in cur_list[0]:
+            # find the index in cur_list[0]
+            indecies = [index for index, item in enumerate(cur_list[0]) if item == object["id"]]
+            for index in indecies:
+                if cur_list[1][index] == object["media_type"]:
+                    return Response({"Status": "true"}, status=status.HTTP_200_OK)
         else:
             return Response({"Status": "false"}, status=status.HTTP_200_OK)
 
@@ -115,17 +119,16 @@ def saveMedia(request):
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
-    if object not in cur_list:
-        cur_list.append(object)
-        background_thread = threading.Thread(
-            target=optimizeInTheBackground, args=([cur_list, user_email],))
-        background_thread.start()
-        current.save()
-        return Response({"Status": "OK"}, status=status.HTTP_200_OK)
-    else:
-        return Response({"Status": "Already in list"}, status=status.HTTP_400_BAD_REQUEST)
-   
-
+    if object["id"] in cur_list[0]:
+        indecies = [index for index, item in enumerate(cur_list[0]) if item == object["id"]]
+        for index in indecies:
+            if cur_list[1][index] == object["media_type"]:
+                return Response({"Status": "already in list"}, status=status.HTTP_400_BAD_REQUEST)
+    cur_list[0].append(object["id"])
+    cur_list[1].append(object["media_type"])
+    current.media = cur_list
+    current.save()
+    return Response({"Status": "OK"}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def clearMedia(request):
@@ -141,7 +144,7 @@ def clearMedia(request):
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
-    current.media = object
+    current.media = [[], []]
     current.save()
     return Response({"Status": "OK"})
 
@@ -162,9 +165,16 @@ def removeMedia(request):
     object = request.data
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
-    temp = current.media
-    current.media = [item for item in temp if item != object]
-    current.save()
+    cur_list = current.media
+    if object["id"] in cur_list[0]:
+        indecies = [index for index, item in enumerate(cur_list[0]) if item == object["id"]]
+        for index in indecies:
+            if cur_list[1][index] == object["media_type"]:
+                cur_list[0].pop(index)
+                cur_list[1].pop(index)
+                current.media = cur_list
+                current.save()
+                return Response({"Status": "OK"}, status=status.HTTP_200_OK)
     return Response({"Status": "OK"})
 
 
