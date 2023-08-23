@@ -1,0 +1,26 @@
+from django.urls import path
+from django.contrib import admin
+from .settings_views import *
+from .subscription_views import *
+from .account_views import *
+
+urlpatterns = [
+    path('get-user-settings/', ReturnSettings.as_view(), name='user-settings'),
+    path('update-user-settings/', UpdateSettings, name='update-settings'),
+    path('delete-user-account/', deleteAccount, name='delete-account'),
+    path('subscribe/basic/', BasicSubscription, name='basic-subscription'),
+    path('subscribe/premium/', PremiumSubscription, name='premium-subscription'),
+    path('subscribe/cancel/', CancelSubscription, name='cancel-subscription'),
+    path('user-subscriptions/create/', createSubscription, name='create-subscription'),
+    path('user-subscriptions/cancel/', cancelSubscription, name='remove-subscription'),
+    path('user-subscriptions/view/', getSubscriptions.as_view(), name='view-subscriptions'),
+    path('user-subscriptions/action/', actionItems.as_view(), name='action-subscriptions'),
+    path('user-subscriptions/set-choice/', handleSelection, name='set-choice'),
+    path('avail-subscriptions/search/', AvailSubs.as_view(), name='search-subscriptions'),
+    path('tosCompliance/', checkTOSStatus.as_view(), name='tos-compliance'),
+    path('tosCompliance/update/', agreeTOS, name='update-tos-compliance'),
+    path('user-subscriptions/generateBundle/', generateBundle, name='create-bundle'),
+    path('user-subscriptions/upcoming/', getMyUpcoming.as_view(), name='get-upcoming'),
+    path('contact/', ContactFormSub, name='contact-us'),
+]
+
