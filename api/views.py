@@ -20,7 +20,7 @@ from django.utils import timezone
 from .models import StaffPick
 import pandas as pd
 from datetime import datetime
-from api.views import isSessionActive
+
 # Create your views here.
 format_str = "%Y-%m-%d"
 
@@ -46,6 +46,17 @@ class returnAll(generics.ListAPIView):
             return None
         data = response.json()['results']
         return Response(data, status=status.HTTP_200_OK)
+
+
+def isSessionActive(sessionid):
+    try:
+        session = Session.objects.get(pk=sessionid)
+    except:
+        return False
+    if session.expire_date > timezone.now():
+        return True
+    else:
+        return False
 
 
 @api_view(['POST'])
