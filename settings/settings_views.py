@@ -18,6 +18,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, HtmlContent
 from .functions import *
 import json
+from api.views import isSessionActive
 
 # Create your views here.
 stripe.api_key = "sk_test_51NPcYzLPNbsO0xpZ3ypmarjukmXpUaySegVecBCiZEcfbiUrBxeuXBQU8QiafXpARoIUKdU2uqzdifzly9DlWedt00aO6ZevFh"
@@ -234,3 +235,10 @@ class checkTOSStatus(generics.ListAPIView):
             return Response("ok", status=status.HTTP_200_OK)
         else:
             return Response("not ok", status=status.HTTP_200_OK)
+
+class isAuthenticated(generics.ListAPIView):
+    def get(self, request):
+        sessionid = request.COOKIES.get('sessionid')
+        if isSessionActive(sessionid) == False:
+            return Response({'error': 'Session expired'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"Status": "OK"})

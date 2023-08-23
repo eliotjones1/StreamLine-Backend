@@ -22,5 +22,6 @@ urlpatterns = [
     path('user-subscriptions/generateBundle/', generateBundle, name='create-bundle'),
     path('user-subscriptions/upcoming/', getMyUpcoming.as_view(), name='get-upcoming'),
     path('contact/', ContactFormSub, name='contact-us'),
+    path('is-authenticated/', isAuthenticated.as_view(), name='is-authenticated'),
 ]
 
