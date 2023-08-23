@@ -15,7 +15,7 @@ from sendgrid.helpers.mail import Mail
 from . import serializers
 from .utils import get_and_authenticate_user, create_user_account
 from .models import CustomUser
-from prod_management.models import UserSettings, UserSubscription, TOSChecked
+from settings.models import UserSettings, UserSubscription, TOSChecked
 # Create your views here.
 
 User = get_user_model()

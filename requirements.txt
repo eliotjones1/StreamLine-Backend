@@ -19,3 +19,4 @@ django-environ
 psycopg2
 sqlparse
 stripe
+dj-database-url
