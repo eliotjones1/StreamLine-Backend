@@ -48,17 +48,6 @@ class returnAll(generics.ListAPIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-def isSessionActive(sessionid):
-    try:
-        session = Session.objects.get(pk=sessionid)
-    except:
-        return False
-    if session.expire_date > timezone.now():
-        return True
-    else:
-        return False
-
-
 @api_view(['POST'])
 def saveBudget(request):
     # get sessionid from request cookie
