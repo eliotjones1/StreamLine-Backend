@@ -5,7 +5,7 @@ from rest_framework import generics, status
 import pandas as pd
 import numpy as np
 from .models import *
-from prod_management.models import *
+from settings.models import *
 from .serializers import *
 from surprise import Reader, Dataset, SVD
 from authentication.models import CustomUser
