@@ -145,6 +145,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SECURE = False
 CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Your frontend domain in development
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
