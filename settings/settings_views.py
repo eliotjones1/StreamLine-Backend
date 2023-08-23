@@ -8,7 +8,7 @@ from rest_framework import viewsets, status
 from .models import *
 from .serializers import UserSettingsSerializer, UserSubscriptionSerializer
 from api.views import isSessionActive
-from authentication.models import CustomUsererData
+from authentication.models import CustomUser
 from authentication.serializers import AuthUserSerializer
 from django.contrib.sessions.models import Session
 from django.utils import timezone
