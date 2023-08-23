@@ -6,10 +6,9 @@ from rest_framework.decorators import api_view
 import requests
 from rest_framework import viewsets, status
 from .models import *
-from .serializers import UserSettingsSerializer, UserSubscriptionSerializer, SubscriptionSerializer
+from .serializers import SubscriptionSerializer
 from api.views import isSessionActive
-from authentication.models import CustomUser, UserData
-from authentication.serializers import AuthUserSerializer
+from authentication.models import CustomUser
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 import stripe
