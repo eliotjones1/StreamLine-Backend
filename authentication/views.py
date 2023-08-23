@@ -62,7 +62,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         user_tos = TOSChecked(user = user_exists, TOS_Checked = False)
         user_tos.save()
         # create user subscription
-        user_subscription = UserSubscription(user = user_exists, Premium = False, Basic = False, Premium_Expiration = None, Basic_Expiration = None, stripe_customer_id = None, stripe_subscription_id = None)
+        user_subscription = StreamLineSubscription(user = user_exists, Premium = False, Basic = False, Premium_Expiration = None, Basic_Expiration = None, stripe_customer_id = None, stripe_subscription_id = None)
         user_subscription.save()
         session = SessionStore()
         session['user'] = user
