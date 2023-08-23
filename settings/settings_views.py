@@ -54,11 +54,11 @@ def UpdateSettings(request):
     user = CustomUser.objects.get(email=user_email)
     if user_email != data['Email']:
         # store temp info
-        temp_subs = store_temp_subs(UserSubscription.objects.get(user=user))
+        temp_subs = store_temp_subs(StreamLineSubscription.objects.get(user=user))
         temp_data = store_temp_data(UserData.objects.get(user=user))
         # delete old user settings, subs, data
         UserSettings.objects.get(Email=user_email).delete()
-        UserSubscription.objects.get(user=user).delete()
+        StreamLineSubscription.objects.get(user=user).delete()
         UserData.objects.get(user=user).delete()
         user.email = data['Email']
         user.save()
@@ -79,7 +79,7 @@ def UpdateSettings(request):
             Push_Notifications=data['Push_Notifications'],
         )
         user_settings.save()
-        user_sub = UserSubscription.objects.create(
+        user_sub = StreamLineSubscription.objects.create(
             user=user,
             Basic=temp_subs['Basic'],
             Basic_Expiration=temp_subs['Basic_Expiration'],
@@ -146,7 +146,7 @@ def deleteAccount(request):
     user = CustomUser.objects.get(email=user_email)
     user_data = UserData.objects.get(user=user)
     user_settings = UserSettings.objects.get(user=user)
-    user_sub = UserSubscription.objects.get(user=user)
+    user_sub = StreamLineSubscription.objects.get(user=user)
     # Check if user_settings
     if user_settings is None:
         return Response({'error': 'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)

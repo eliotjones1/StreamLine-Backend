@@ -20,6 +20,7 @@ from django.utils import timezone
 from .models import StaffPick
 import pandas as pd
 from datetime import datetime
+from api.views import isSessionActive
 # Create your views here.
 format_str = "%Y-%m-%d"
 
