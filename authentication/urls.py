@@ -6,4 +6,4 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register('auth', AuthViewSet, basename='auth')
 
 
-urlpatterns = router.urls
+urlpatterns = [path('', include(router.urls)),]
