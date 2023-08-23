@@ -22,5 +22,4 @@ dj-database-url
 django-heroku
 gunicorn
 whitenoise
-rest_framekwork
-django-rest-framework
+
