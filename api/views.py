@@ -118,10 +118,10 @@ def saveMedia(request):
     # Expects a dict with "id" and "type" as keys
     object = request.data
     print(object)
-    print(cur_list)
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
+    print(cur_list)
     if object["id"] in cur_list[0]:
         indecies = [index for index, item in enumerate(cur_list[0]) if item == object["id"]]
         for index in indecies:
