@@ -144,7 +144,7 @@ def register(request):
     data = serializers.AuthUserSerializer(user).data
     user = data["email"]
     user_exists = CustomUser.objects.get(email = user)
-    user_data = UserData(user = user_exists, budget = "0", bundle = {"Images":[], "Movies_and_TV_Shows":[]}, media = [])
+    user_data = UserData(user = user_exists, budget = "0", bundle = {"Images":[], "Movies_and_TV_Shows":[]}, media = [[],[]])
     user_data.save()
     # create user settings
     user_settings = UserSettings(user = user_exists, Email = user_exists, First_Name = user_exists.first_name, Last_Name = user_exists.last_name, Street_Address = "", City = "", State_Province = "", Country = "", Postal_Code = "", Newsletter = True, Promotions = True, Push_Notifications = "Everything")
