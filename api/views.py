@@ -117,6 +117,7 @@ def saveMedia(request):
 
     # Expects a dict with "id" and "type" as keys
     object = request.data
+    print(object)
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
@@ -227,7 +228,7 @@ def returnInfo(request):
 
 class newlyReleased(generics.ListAPIView):
     def get(self, request):
-        
+
         # TV SHOWS
         url = "https://api.themoviedb.org/3/discover/tv?first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US"
         headers = {
