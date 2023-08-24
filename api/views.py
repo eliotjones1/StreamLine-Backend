@@ -227,7 +227,7 @@ def returnInfo(request):
 
 class newlyReleased(generics.ListAPIView):
     def get(self, request):
-
+        
         # TV SHOWS
         url = "https://api.themoviedb.org/3/discover/tv?first_air_date_year=2023&include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US"
         headers = {
