@@ -120,6 +120,8 @@ class getSubscriptions(generics.ListAPIView):
         for subscription in subscriptions:
             if subscription.is_active:
                 out.append(SubscriptionSerializer(subscription).data)
+        # order out by end date soonest to latest
+        out = sorted(out, key=lambda k: k['end_date'])
         return Response(out, status=status.HTTP_200_OK)
     
 def checkSubscriptionStatus(user):
