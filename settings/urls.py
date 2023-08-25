@@ -23,5 +23,6 @@ urlpatterns = [
     path('user-subscriptions/upcoming/', getMyUpcoming.as_view(), name='get-upcoming'),
     path('contact/', ContactFormSub, name='contact-us'),
     path('is-authenticated/', isAuthenticated.as_view(), name='is-authenticated'),
+    path('user-subscriptions/recommendations/', recommendedServices.as_view(), name='get-recommendations'),
 ]
 
