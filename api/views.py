@@ -95,8 +95,10 @@ class checkInList(generics.ListAPIView):
         current = UserData.objects.get(user_id=user_exists)
         cur_list = current.media
         if id in cur_list[0]:
+            print(id)
             # find the index in cur_list[0]
             indecies = [index for index, item in enumerate(cur_list[0]) if item == id]
+            print(indecies)
             for index in indecies:
                 if cur_list[1][index] == media_type:
                     return Response({"Status": "true"}, status=status.HTTP_200_OK)
