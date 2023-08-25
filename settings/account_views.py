@@ -95,7 +95,7 @@ def cancelSubscription(request):
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
     subscription_info = json.dumps(request.data)
     user = CustomUser.objects.get(email=user_email)
-    this_subscription = ThirdPartySubscription.objects.create(user=user, subscription_name=subscription_info['name'])
+    this_subscription = ThirdPartySubscription.objects.get(user=user, subscription_name=subscription_info['name'])
     this_subscription.is_active = False
     this_subscription.num_cancellations += 1
     this_subscription.save()
@@ -117,7 +117,8 @@ class getSubscriptions(generics.ListAPIView):
         subscriptions = ThirdPartySubscription.objects.filter(user=user)
         out = []
         for subscription in subscriptions:
-            out.append(SubscriptionSerializer(subscription).data)
+            if subscription.is_active:
+                out.append(SubscriptionSerializer(subscription).data)
         return Response(out, status=status.HTTP_200_OK)
     
 def checkSubscriptionStatus(user):
