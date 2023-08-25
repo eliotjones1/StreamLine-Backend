@@ -179,7 +179,7 @@ def CancelSubscription(request):
     if user_exists is None:
         return Response({'error': 'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
 
-    subscription = UserSubscription.objects.get(user=user_exists)
+    subscription = StreamLineSubscription.objects.get(user=user_exists)
     if subscription.Premium == False and subscription.Basic == False:
         return Response({'error': 'User does not have a subscription'}, status=status.HTTP_400_BAD_REQUEST)
     if subscription.Premium == True:
