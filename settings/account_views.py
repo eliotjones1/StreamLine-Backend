@@ -83,7 +83,7 @@ def createSubscription(request):
     return Response(SubscriptionSerializer(this_subscription).data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
-def cancelSubscription(request):
+def removeSubscription(request):
     sessionid = request.COOKIES.get('sessionid')
     # print(sessionid)
     # Check if session is active
@@ -386,3 +386,35 @@ class getMyUpcoming(generics.ListAPIView):
         return Response(output, status=status.HTTP_200_OK)
                 
 
+## For user-dash
+# Need option to add a service: take top four recommended services (based on stuff in watchlist), or the ability to search and add a service
+# If a user is a basic member:
+###### Order services by expiring soonest to latest. If within 7 days of expiry, status = expiring. We send them emails on 7 days, 4 days, and 1 day, and if they remove
+###### a service from their list, we send them a reminder email saying that they have to take this action. 
+# If a user is a premium memberL
+###### Still order services by expiry date. When a service is expiring, we give them options: they can keep it, they can cancel it, or they can switch to a new service.
+###### All of this we should handle ourselves. When they click "actions", should give a pop up with three columnsL "delete", "keeo", and "switch", each with different kinds
+###### of information that we are giving them. Send them emails as well, but we are responsible for handling everything. 
+
+# Need a webhook that tracks the number of days left in a subscription to notify individuals and change tags. 
+
+## UD #1: show potential services button
+class recommendedServices(models.Model):
+    def get(self, request):
+        sessionid = request.COOKIES.get('sessionid')
+        if isSessionActive(sessionid) == False:
+            return Response({'error': 'Session expired'}, status=status.HTTP_400_BAD_REQUEST)
+        user_email = Session.objects.get(session_key=sessionid).get_decoded()['user_email']
+        if user_email is None:
+            return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        user = CustomUser.objects.get(email=user_email)
+        # Assume bundles have already been generated
+        bundle = UserData.objects.get(user=user).bundle
+        current_services = ThirdPartySubscription.objects.filter(user=user)
+        current_services = list(current_services.values_list('subscription_name', flat=True))
+        default_bundle = bundle[0]
+        output = []
+        for service in default_bundle["Streaming_Services"]:
+            if service not in current_services:
+                output.append(service)
+        return Response(output, status=status.HTTP_200_OK)

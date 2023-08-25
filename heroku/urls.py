@@ -24,4 +24,5 @@ urlpatterns = [
     path("settings/", include("settings.urls")),
     path("newsletter/", include("newsletter.urls")),
     path('recommendations/', include('recommendations.urls')),
+    path('webhooks/', include('webhooks.urls')),
 ]
