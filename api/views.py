@@ -89,11 +89,14 @@ class checkInList(generics.ListAPIView):
             session_key=sessionid).get_decoded()['user_email']
         if user_email is None:
             return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
-        id = request.query_params.get('id', None)
+        id = str(request.query_params.get('id', None))
         media_type = request.query_params.get('media_type', None)
         user_exists = CustomUser.objects.get(email=user_email)
         current = UserData.objects.get(user_id=user_exists)
         cur_list = current.media
+        print(cur_list)
+        print(id)
+        print(media_type)
         if id in cur_list[0]:
             print(id)
             # find the index in cur_list[0]
