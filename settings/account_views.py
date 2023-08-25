@@ -123,23 +123,6 @@ class getSubscriptions(generics.ListAPIView):
         # order out by end date soonest to latest
         out = sorted(out, key=lambda k: k['end_date'])
         return Response(out, status=status.HTTP_200_OK)
-    
-def checkSubscriptionStatus(user):
-    sl_subscription = StreamLineSubscription.objects.get(user = user)
-
-    # Check if subscription basic expiration date was before current time)
-    if sl_subscription.Basic_Expiration is not None and sl_subscription.Basic_Expiration < timezone.now():
-        sl_subscription.Basic = False
-        sl_subscription.Basic_Expiration = None
-        sl_subscription.save()
-        # Check if subscription premium expiration date was before current time)
-    if sl_subscription.Premium_Expiration is not None and sl_subscription.Premium_Expiration < timezone.now():
-        sl_subscription.Premium = False
-        sl_subscription.Premium_Expiration = None
-        sl_subscription.save()
-    if sl_subscription is None or (sl_subscription.Basic == False and sl_subscription.Premium == False):
-        return False
-    return True
 
 class actionItems(generics.ListAPIView):
     def get(self, request):
@@ -393,7 +376,7 @@ class getMyUpcoming(generics.ListAPIView):
 # If a user is a basic member:
 ###### Order services by expiring soonest to latest. If within 7 days of expiry, status = expiring. We send them emails on 7 days, 4 days, and 1 day, and if they remove
 ###### a service from their list, we send them a reminder email saying that they have to take this action. 
-# If a user is a premium memberL
+# If a user is a premium member
 ###### Still order services by expiry date. When a service is expiring, we give them options: they can keep it, they can cancel it, or they can switch to a new service.
 ###### All of this we should handle ourselves. When they click "actions", should give a pop up with three columnsL "delete", "keeo", and "switch", each with different kinds
 ###### of information that we are giving them. Send them emails as well, but we are responsible for handling everything. 
