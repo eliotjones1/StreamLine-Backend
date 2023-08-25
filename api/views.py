@@ -176,8 +176,8 @@ def removeMedia(request):
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
-    if object["id"] in cur_list[0]:
-        indecies = [index for index, item in enumerate(cur_list[0]) if item == object["id"]]
+    if str(object["id"]) in cur_list[0]:
+        indecies = [index for index, item in enumerate(cur_list[0]) if item == str(object["id"])]
         for index in indecies:
             if cur_list[1][index] == object["media_type"]:
                 cur_list[0].pop(index)
