@@ -93,7 +93,7 @@ def cancelSubscription(request):
     user_email = Session.objects.get(session_key=sessionid).get_decoded()['user_email']
     if user_email is None:
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
-    subscription_info = json.dumps(request.data)
+    subscription_info = request.data
     user = CustomUser.objects.get(email=user_email)
     this_subscription = ThirdPartySubscription.objects.get(user=user, subscription_name=subscription_info['name'])
     this_subscription.is_active = False
