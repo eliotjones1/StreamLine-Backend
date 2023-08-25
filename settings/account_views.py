@@ -420,4 +420,9 @@ def actionItems(request):
     if not sub_status:
         return Response({'error': 'No StreamLine subscription'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        pass
+        sl_subscription = StreamLineSubscription.objects.get(user = user)
+        if sl_subscription.Basic:
+            pass
+        else:
+            pass
+    return Response(status=status.HTTP_200_OK)
