@@ -417,12 +417,13 @@ def actionItems(request):
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
     user = CustomUser.objects.get(email=user_email)
     sub_status = checkSubscriptionStatus(user)
+    ## In POST Request, expects the subscription object at 0, and the action code at 1
     if not sub_status:
         return Response({'error': 'No StreamLine subscription'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         sl_subscription = StreamLineSubscription.objects.get(user = user)
         if sl_subscription.Basic:
-            pass
+            status = handleBasicAction(user_email, request.data[0], request.data[1])
         else:
-            pass
+            status = handlePremiumAction(user_email, request.data[0], request.data[1])
     return Response(status=status.HTTP_200_OK)

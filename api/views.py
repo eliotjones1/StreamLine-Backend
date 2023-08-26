@@ -94,17 +94,18 @@ class checkInList(generics.ListAPIView):
         user_exists = CustomUser.objects.get(email=user_email)
         current = UserData.objects.get(user_id=user_exists)
         cur_list = current.media
-        if id == "231319":
-            print(cur_list[0])
-            if id in cur_list[0]:
-                print("true")
-            else: 
-                print("this_should_work")
-        if id in cur_list[0]:
+
+        ids = []
+        types = []
+        for elem in cur_list:
+            ids.append(elem["id"])
+            types.append(elem["media_type"])
+
+        if id in ids:
             # find the index in cur_list[0]
-            indecies = [index for index, item in enumerate(cur_list[0]) if item == id]
+            indecies = [index for index, item in enumerate(ids) if item == id]
             for index in indecies:
-                if cur_list[1][index] == media_type:
+                if types[index] == media_type:
                     return Response({"Status": "true"}, status=status.HTTP_200_OK)
         else:
             return Response({"Status": "false"}, status=status.HTTP_200_OK)
@@ -129,13 +130,18 @@ def saveMedia(request):
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
     print(cur_list)
-    if object["id"] in cur_list[0]:
-        indecies = [index for index, item in enumerate(cur_list[0]) if item == object["id"]]
+    # Get all values corresponding to the "id" key in each dict:
+    ids = []
+    types = []
+    for elem in cur_list:
+        ids.append(elem["id"])
+        types.append(elem("media_type"))
+    if str(object["id"]) in ids:
+        indecies = [index for index, item in enumerate(ids) if item == object["id"]]
         for index in indecies:
-            if cur_list[1][index] == object["media_type"]:
+            if types[index] == object["media_type"]:
                 return Response({"Status": "already in list"}, status=status.HTTP_400_BAD_REQUEST)
-    cur_list[0].append(str(object["id"]))
-    cur_list[1].append(object["media_type"])
+    cur_list.append(object)
     current.media = cur_list
     current.save()
     return Response({"Status": "OK"}, status=status.HTTP_200_OK)
@@ -154,7 +160,7 @@ def clearMedia(request):
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
-    current.media = [[], []]
+    current.media = []
     current.save()
     return Response({"Status": "OK"})
 
@@ -176,13 +182,23 @@ def removeMedia(request):
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
-    if str(object["id"]) in cur_list[0]:
-        indecies = [index for index, item in enumerate(cur_list[0]) if item == str(object["id"])]
+
+    ids = []
+    types = []
+    for elem in cur_list:
+        ids.append(elem["id"])
+        types.append(elem("media_type"))
+
+    if str(object["id"]) in ids:
+        indecies = [index for index, item in enumerate(ids) if item == str(object["id"])]
         for index in indecies:
-            if cur_list[1][index] == object["media_type"]:
-                cur_list[0].pop(index)
-                cur_list[1].pop(index)
-                current.media = cur_list
+            if types[index] == object["media_type"]:
+                ids.pop(index)
+                types.pop(index)
+                new_list = []
+                for i in range(len(ids)):
+                    new_list.append({"id": ids[i], "media_type": types[i]})
+                current.media = new_list
                 current.save()
                 return Response({"Status": "OK"}, status=status.HTTP_200_OK)
     return Response({"Status": "OK"})
