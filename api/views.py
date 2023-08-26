@@ -141,7 +141,7 @@ def saveMedia(request):
         for index in indecies:
             if types[index] == object["media_type"]:
                 return Response({"Status": "already in list"}, status=status.HTTP_400_BAD_REQUEST)
-    cur_list.append(object)
+    cur_list.append({"id": str(object["id"]), "media_type": object["media_type"]})
     current.media = cur_list
     current.save()
     return Response({"Status": "OK"}, status=status.HTTP_200_OK)
