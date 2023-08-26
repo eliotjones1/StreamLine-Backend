@@ -3,6 +3,7 @@ from django.utils import timezone
 from rest_framework import status
 import sendgrid
 from sendgrid.helpers.mail import Mail
+from .models import *
 
 def store_temp_subs(user_sub):
     temp_subs = {}
@@ -59,11 +60,14 @@ def handleBasicAction(user_email, subscription, code):
             if response.status_code == 202:
                 pass
             else:
-                return Response({})
+                return status.HTTP_400_BAD_REQUEST
         except Exception as e:
             print(str(e))
             pass
     elif code == 2:
+        cur_subscription = ThirdPartySubscription.objects.get(user = user_email, subscription_name = subscription["name"])
+        cur_subscription.end_date += timezone.timedelta(days=30)
+        cur_subscription.save()
         ## Send them an email saying they need to cancel their subscription by x date
         ## Configure a webhook (in a bit) to send emails at 4 days and 1 day before expiration
         ## Update subscription object with cancellation and num_cancellations

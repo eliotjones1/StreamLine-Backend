@@ -327,8 +327,28 @@ class recommendedServices(generics.ListAPIView):
         current_services = list(current_services.values_list('subscription_name', flat=True))
         default_bundle = bundle[0]
         output = []
+        service_df = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
+        service_images = pd.read_csv('api/random/serviceImages.csv')
         for service in default_bundle["Streaming_Services"]:
             if service not in current_services:
+                # find row in service_df that corresponds to service
+                service_info = {}
+                service_info["Name"] = service
+                service_row = service_df.loc[service_df['Name'] == service]
+                service_info["Link"] = service_row['Link'].values[0]
+                service_info["Packages"] = []
+                # loop over the 1-8th columns in the row (0 indexed)
+                i = 1
+                while i < 9:
+                    if service_row.iloc[0][i] is not None:
+                        service_info["Packages"].append(
+                            {
+                                "Version": service_row.iloc[0, i],
+                                "Price": service_row.iloc[0,i+1]
+                            }
+                            )
+                    i += 2
+                service_info["Image"] = service_images.loc[service_images['service_name'] == service]['logo_path'].values[0]
                 output.append(service)
         return Response(output, status=status.HTTP_200_OK)
 

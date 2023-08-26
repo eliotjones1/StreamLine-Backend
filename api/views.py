@@ -440,24 +440,30 @@ class StaffPicks(generics.ListAPIView):
 class seeServices(generics.ListAPIView):
     def get(self, request):
         service_images = pd.read_csv('api/random/serviceImages.csv')
-        service_info = pd.read_csv('api/random/pricing - Sheet2-3.csv')
+        service_info = pd.read_csv('api/random/pricing - Copy of Sheet 1-2.csv')
 
         # For each row in service_info, find the corresponding image in service_images by matching service_name in serviceImages to Name in service_info
         # Output the title, price, image, and link into a dict to return
 
         output = []
-        for index, row in service_info.iterrows():
-            service_name = row['Name']
-            service_price = row['Price']
-            service_link = row['Link']
-            if service_name not in service_images['service_name'].values:
-                continue
+        for i in range(len(service_info)):
+            service_name = service_info.iloc[i]['Name']
+            service_link = service_info.iloc[i]['Link']
+            service_packages = []
+            cur_row = service_images.loc[service_images['Service'] == service_name]
+            i = 1
+            while i < 9:
+                service_packages.append({
+                    "Version": cur_row.iloc[0][i],
+                    "Price": cur_row.iloc[0][i+1]
+                })
+                i += 2
             service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values[0]
             output.append({
-                'title': service_name,
-                'price': service_price if service_price != "-" else None,
-                'image': service_image,
-                'link': service_link
+                "service_name": service_name,
+                "service_image": service_image,
+                "service_link": service_link,
+                "service_packages": service_packages
             })
         return Response(output, status=status.HTTP_200_OK)
         
