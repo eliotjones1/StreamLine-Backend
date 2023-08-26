@@ -135,7 +135,7 @@ def saveMedia(request):
     types = []
     for elem in cur_list:
         ids.append(elem["id"])
-        types.append(elem("media_type"))
+        types.append(elem["media_type"])
     if str(object["id"]) in ids:
         indecies = [index for index, item in enumerate(ids) if item == object["id"]]
         for index in indecies:
@@ -187,7 +187,7 @@ def removeMedia(request):
     types = []
     for elem in cur_list:
         ids.append(elem["id"])
-        types.append(elem("media_type"))
+        types.append(elem["media_type"])
 
     if str(object["id"]) in ids:
         indecies = [index for index, item in enumerate(ids) if item == str(object["id"])]
