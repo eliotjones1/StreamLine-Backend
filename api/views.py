@@ -447,17 +447,17 @@ class seeServices(generics.ListAPIView):
 
         output = []
         for i in range(len(service_info)):
-            service_name = service_info.iloc[i]['Name']
-            service_link = service_info.iloc[i]['Link']
+            service_name = service_info['Name'][i]
+            service_link = service_info['Link'][i]
             service_packages = []
-            cur_row = service_images.loc[service_images['service_name'] == service_name]
-            i = 1
-            while i < 9:
+            cur_row = service_info.iloc[i]
+            j = 1
+            while j < 9:
                 service_packages.append({
-                    "Version": cur_row.iloc[0][i],
-                    "Price": cur_row.iloc[0][i+1]
+                    "Version": cur_row.iloc[i,j],
+                    "Price": cur_row.iloc[i,j+1]
                 })
-                i += 2
+                j += 2
             service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values[0]
             output.append({
                 "service_name": service_name,
