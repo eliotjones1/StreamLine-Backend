@@ -464,6 +464,7 @@ class seeServices(generics.ListAPIView):
                 "service_link": service_link,
                 "service_packages": service_packages
             })
+        print(output)
         return Response(output, status=status.HTTP_200_OK)
         
 
