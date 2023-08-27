@@ -341,12 +341,13 @@ class recommendedServices(generics.ListAPIView):
                 i = 1
                 while i < 9:
                     if service_row.iloc[0][i] is not None:
-                        service_info["Packages"].append(
-                            {
-                                "Version": service_row.iloc[0, i] if not pd.isna(service_row.iloc[0, i]) else "Not Available",
-                                "Price": service_row.iloc[0,i+1] if not pd.isna(service_row.iloc[0, i+1]) else "Not Available",
-                            }
-                            )
+                        if not pd.isna(service_row.iloc[0, i]) and not pd.isna(service_row.iloc[0, i+1]):
+                            service_info["Packages"].append(
+                                {
+                                    "Version": service_row.iloc[0, i],
+                                    "Price": service_row.iloc[0,i+1],
+                                }
+                                )
                     i += 2
                 print(service_info)
                 service_info["Image"] = service_images.loc[service_images['service_name'] == service]['logo_path'].values[0]

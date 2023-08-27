@@ -452,10 +452,11 @@ class seeServices(generics.ListAPIView):
             service_packages = []
             j = 1
             while j < 9:
-                service_packages.append({
-                    "Version": service_info.iloc[i,j] if not pd.isna(service_info.iloc[i, j]) else "Not Available",
-                    "Price": service_info.iloc[i,j+1] if not pd.isna(service_info.iloc[i, j+1]) else "Not Available"
-                })
+                if not pd.isna(service_info.iloc[i, j]) and not pd.isna(service_info.iloc[i, j+1]):
+                    service_packages.append({
+                        "Version": service_info.iloc[i,j], 
+                        "Price": service_info.iloc[i,j+1], 
+                    })
                 j += 2
             service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values
             output.append({
