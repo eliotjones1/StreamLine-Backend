@@ -55,8 +55,8 @@ class ThirdPartySubscription(models.Model):
     end_date = models.DateField(null=True, blank=True)
     num_months = models.IntegerField(default = 0)
     num_cancellations = models.IntegerField(default = 0)
+    is_active = models.BooleanField(default = "True")
     subscription_version = models.CharField(max_length=100) 
-    status = models.CharField(max_length=100)
 
 
 class UserContactRequest(models.Model):
