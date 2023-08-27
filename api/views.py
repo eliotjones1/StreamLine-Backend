@@ -450,7 +450,7 @@ class seeServices(generics.ListAPIView):
             service_name = service_info.iloc[i]['Name']
             service_link = service_info.iloc[i]['Link']
             service_packages = []
-            cur_row = service_images.loc[service_images['Service'] == service_name]
+            cur_row = service_images.loc[service_images['service_name'] == service_name]
             i = 1
             while i < 9:
                 service_packages.append({
