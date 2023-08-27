@@ -9,14 +9,14 @@ HBO Max,With Ads,9.99,Ad-Free,15.99,,,,,0,https://www.hbomax.com
 Netflix Kids,Netflix,,,,,,,,1,https://www.netflix.com/kids
 Peacock,,0,,,,,,,0,https://www.peacocktv.com
 Crunchyroll,Fan,7.99,Mega Fan,9.99,Ultimate Fan,14.99,,,0,https://www.crunchyroll.com
-Globo Play,,13.99,,,,,,,0,https://globoplay.globo.com
+Globo Play,Standard,13.99,,,,,,,0,https://globoplay.globo.com
 Peacock Premium,Premium,4.99,Premium Plus,9.99,,,,,0,https://www.peacocktv.com/premium
-Acorn TV,,6.99,,,,,,,0,https://acorn.tv
-VIX,,6.99,,,,,,,0,https://www.vix.com
-Apple TV Plus,,6.99,,,,,,,0,https://www.apple.com/apple-tv-plus
+Acorn TV,Standard,6.99,,,,,,,0,https://acorn.tv
+VIX,Standard,6.99,,,,,,,0,https://www.vix.com
+Apple TV Plus,Standard,6.99,,,,,,,0,https://www.apple.com/apple-tv-plus
 Sony Liv,via Sling TV,,,,,,,,1,https://www.sonyliv.com
 YouTube,,0,,,,,,,0,https://www.youtube.com
-Kocowa,,6.99,,,,,,,0,https://www.kocowa.com
+Kocowa,Standard,6.99,,,,,,,0,https://www.kocowa.com
 YouTube Premium,Individual,11.99,Family,22.99,,,,,0,https://www.youtube.com/premium
 Arte,,0,,,,,,,0,https://www.arte.tv
 Curiosity Stream,Standard,4.99,Smart,9.99,,,,,0,https://www.curiositystream.com
@@ -25,8 +25,8 @@ DIRECTV,Entertainment,64.99,Choice,84.99,Ultimate,109.99,Premier,154.99,0,https:
 Watchbox,,0,,,,,,,0,https://www.watchbox.com
 Paramount Plus,Essential,4.99,Premium,9.99,,,,,0,https://www.paramountplus.com
 Funimation Now,Premium,7.99,Premium Plus,9.99,,,,,0,https://www.funimation.com
-iWantTFC,,12.99,,,,,,,0,https://www.iwanttfc.com
-Wink,,4.99,,,,,,,0,https://www.wink.com
+iWantTFC,Standard,12.99,,,,,,,0,https://www.iwanttfc.com
+Wink,Standard,4.99,,,,,,,0,https://www.wink.com
 FandangoNOW,,0,,,,,,,0,https://www.fandangonow.com
 IMDb TV,,0,,,,,,,0,https://www.imdbtv.com
 Blockbuster,-,,,,,,,,0,https://www.blockbuster.com
@@ -37,9 +37,9 @@ The CW,,0,,,,,,,0,https://www.cwtv.com
 CW Seed,,0,,,,,,,0,https://www.cwseed.com
 Vudu,,0,,,,,,,0,https://www.vudu.com
 TNTGo,-,,,,,,,,0,https://www.tntdrama.com/go
-Starz,,8.99,,,,,,,0,https://www.starz.com
+Starz,Standard,8.99,,,,,,,0,https://www.starz.com
 South Park,-,,,,,,,,0,https://www.southparkstudios.com
-Showtime,,10.99,,,,,,,0,https://www.showtime.com
+Showtime,Standard,10.99,,,,,,,0,https://www.showtime.com
 PBS,,0,,,,,,,0,https://www.pbs.org
 FXNow,,,,,,,,,1,https://www.fxnetworks.com
 Tubi TV,,0,,,,,,,0,https://www.tubitv.com
@@ -53,32 +53,32 @@ Global TV,,0,,,,,,,1,https://www.globaltv.com
 Crackle,,0,,,,,,,0,https://www.crackle.com
 AMC,,,,,,,,,1,https://www.amc.com
 NBC,,0,,,,,,,1,https://www.nbc.com
-Epix,,5.99,,,,,,,0,https://www.epix.com
+Epix,Standard,5.99,,,,,,,0,https://www.epix.com
 Freeform,,0,,,,,,,1,https://www.freeform.com
 History,,,,,,,,,1,https://www.history.com
 Syfy,,,,,,,,,1,https://www.syfy.com
 A&E,,,,,,,,,1,https://www.aetv.com
 Lifetime,,,,,,,,,1,https://www.mylifetime.com
-Shudder,,5.99,,,,,,,0,https://www.shudder.com
-Sundance Now,,6.99,,,,,,,0,https://www.sundancenow.com
+Shudder,Standard,5.99,,,,,,,0,https://www.shudder.com
+Sundance Now,Standard,6.99,,,,,,,0,https://www.sundancenow.com
 Popcornflix,,0,,,,,,,0,https://www.popcornflix.com
-BritBox,,7.99,,,,,,,0,https://www.britbox.com
+BritBox,Standard,7.99,,,,,,,0,https://www.britbox.com
 Amazon Arthaus Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_N2xnJA_JRU4Ow_1_2?ie=UTF8&merchId=arthaus1&nodeId=3280627011
 Pantaya,-,,,,,,,,0,https://www.pantaya.com
-Boomerang,,5.99,,,,,,,0,https://www.boomerang.com
+Boomerang,Standard,5.99,,,,,,,0,https://www.boomerang.com
 Urban Movie Channel,,5.99,,,,,,,0,https://www.urbanmoviechannel.com
-Dove Channel,,4.99,,,,,,,0,https://www.dovechannel.com
-Yupp TV,,17.99,,,,,,,0,https://www.yupptv.com
-Eros Now,,7.99,,,,,,,0,https://www.erosnow.com
-Magnolia Selects,,4.99,,,,,,,0,https://www.magnoliaselects.com
+Dove Channel,Standard,4.99,,,,,,,0,https://www.dovechannel.com
+Yupp TV,Standard,17.99,,,,,,,0,https://www.yupptv.com
+Eros Now,Standard,7.99,,,,,,,0,https://www.erosnow.com
+Magnolia Selects,Standard,4.99,,,,,,,0,https://www.magnoliaselects.com
 WWE Network,,0,,,,,,,1,https://www.wwe.com/wwenetwork
-MyOutdoorTV,,9.99,,,,,,,0,https://www.myoutdoortv.com
+MyOutdoorTV,Standard,9.99,,,,,,,0,https://www.myoutdoortv.com
 Nickhits Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_H7b8Hk_JRU4Ow_1_3?ie=UTF8&merchId=nickhits1&nodeId=3280629011
 Noggin Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_mRwvF2_JRU4Ow_1_4?ie=UTF8&merchId=noggin1&nodeId=3280626011
-Hopster TV,,4.99,,,,,,,0,https://www.hopster.tv
+Hopster TV,Standard,4.99,,,,,,,0,https://www.hopster.tv
 Laugh Out Loud,-,,,,,,,,0,https://www.laughoutloud.com
 Smithsonian Channel,,,,,,,,,1,https://www.smithsonianchannel.com
-Pure Flix,,7.99,,,,,,,0,https://www.pureflix.com
+Pure Flix,Standard,7.99,,,,,,,0,https://www.pureflix.com
 Hallmark Movies,-,,,,,,,,0,https://www.hallmarkmoviesnow.com
 PBS Kids Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_VwPSrD_JRU4Ow_1_5?ie=UTF8&merchId=nickjr1&nodeId=3280625011
 Boomerang Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_WK2M2h_JRU4Ow_1_6?ie=UTF8&merchId=boomerang1&nodeId=3280624011
@@ -97,7 +97,7 @@ MTV,,,,,,,,,1,https://www.mtv.com
 Starz Play Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_7u2S33_JRU4Ow_1_16?ie=UTF8&merchId=starzplay1&nodeId=3280614011
 Classix,Basic,0,Unlimited,3.99,,,,,0,https://www.classix.tv
 Shout! Factory TV,,0,,,,,,,0,https://www.shoutfactorytv.com
-Mhz Choice,,7.99,,,,,,,0,https://www.mhzchoice.com
+Mhz Choice,Standard,7.99,,,,,,,0,https://www.mhzchoice.com
 Netflix Free,,0,,,,,,,0,https://www.netflix.com
 Shudder Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_ydM5iM_JRU4Ow_1_17?ie=UTF8&merchId=shudder1&nodeId=3280612011
 AcornTV Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_8F7Xbx_JRU4Ow_1_18?ie=UTF8&merchId=acorntv1&nodeId=3280611011
@@ -107,15 +107,15 @@ Cartoon Network,,,,,,,,,1,https://www.cartoonnetwork.com
 Adult Swim,,,,,,,,,1,https://www.adultswim.com
 USA Network,,,,,,,,,1,https://www.usanetwork.com
 Fox,,,,,,,,,1,https://www.fox.com
-FlixFling,,7.99,,,,,,,0,https://www.flixfling.com
+FlixFling,Standard,7.99,,,,,,,0,https://www.flixfling.com
 Bet+ Amazon Channel,,,,,,,,,1,https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_2_c_QfEfsE_JRU4Ow_1_21?ie=UTF8&merchId=betplus1&nodeId=3280606011
-AMC Plus,,8.99,,,,,,,0,https://www.amcplus.com
+AMC Plus,Standard,8.99,,,,,,,0,https://www.amcplus.com
 Rakuten Viki,Standard,5.99,Premium,9.99,,,,,0,https://www.viki.com
 Bravo TV,,,,,,,,,1,https://www.bravotv.com
 TNT,,,,,,,,,1,https://www.tntdrama.com
 Food Network,,,,,,,,,1,https://www.foodnetwork.com
 BBC America,,,,,,,,,1,https://www.bbcamerica.com
-IndieFlix,,4.99,,,,,,,0,https://www.indieflix.com
+IndieFlix,Standard,4.99,,,,,,,0,https://www.indieflix.com
 AHCTV,,,,,,,,,1,https://www.ahctv.com
 TLC,,,,,,,,,1,https://www.tlc.com
 HGTV,,,,,,,,,1,https://www.hgtv.com
@@ -130,7 +130,7 @@ Motor Trend,,,,,,,,,1,https://www.motortrend.com
 Cooking Channel,,,,,,,,,1,https://www.cookingchanneltv.com
 Travel Channel,,,,,,,,,1,https://www.travelchannel.com
 Paramount Network,,,,,,,,,0,https://www.paramountnetwork.com
-Here TV,,7.99,,,,,,,0,https://www.here.tv
+Here TV,Standard,7.99,,,,,,,0,https://www.here.tv
 TV Land,,,,,,,,,1,https://www.tvland.com
 Logo TV,,,,,,,,,1,https://www.logotv.com
 VH1,,,,,,,,,1,https://www.vh1.com
@@ -139,13 +139,13 @@ TBS,,,,,,,,,1,https://www.tbs.com
 AsianCrush,,0,,,,,,,0,https://www.asiancrush.com
 FILMRISE,,0,,,,,,,0,https://www.filmrise.com
 Revry,,0,,,,,,,0,https://www.revry.tv
-Rooster Teeth,,5.99,,,,,,,0,https://www.roosterteeth.com
+Rooster Teeth,Standard,5.99,,,,,,,0,https://www.roosterteeth.com
 Spectrum On Demand,,59.99,,,,,,,0,https://www.spectrumondemand.com
 OXYGEN,,,,,,,,,1,https://www.oxygen.com
 tru TV,,,,,,,,,1,https://www.trutv.com
 DisneyNOW,,,,,,,,,1,https://disneynow.com
 WeTV,,,,,,,,,1,https://www.wetv.com
 Discovery Plus,With Ads,4.99,Ad-Free,6.99,,,,,0,https://www.discoveryplus.com
-ARROW,,6.99,,,,,,,0,https://www.cwtv.com/shows/arrow
+ARROW,Standard,6.99,,,,,,,0,https://www.cwtv.com/shows/arrow
 Plex,,0,,,,,,,0,https://www.plex.tv
 The Oprah Winfrey Network,,,,,,,,,1,https://www.oprah.com
