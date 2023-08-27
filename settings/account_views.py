@@ -349,7 +349,7 @@ class recommendedServices(generics.ListAPIView):
                             )
                     i += 2
                 service_info["Image"] = service_images.loc[service_images['service_name'] == service]['logo_path'].values[0]
-                output.append(service)
+                output.append(service_info)
         return Response(output, status=status.HTTP_200_OK)
 
 class blah(generics.ListAPIView):
