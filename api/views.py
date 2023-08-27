@@ -457,7 +457,7 @@ class seeServices(generics.ListAPIView):
                     "Price": service_info.iloc[i,j+1]
                 })
                 j += 2
-            service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values[0]
+            service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path']
             output.append({
                 "service_name": service_name,
                 "service_image": service_image,
