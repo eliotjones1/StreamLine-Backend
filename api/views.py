@@ -458,7 +458,8 @@ class seeServices(generics.ListAPIView):
         top_four = sorted(top_four, key=lambda x: x[1], reverse=True)[:4]
         print(top_four)
         output = []
-        for service in top_four:
+        for tuple in top_four:
+            service = tuple[0]
             service_name = service_info.loc[service_info['Name'] == service]['Name'].values[0]
             service_link = service_info.loc[service_info['Name'] == service]['Link'].values[0]
             service_packages = []
