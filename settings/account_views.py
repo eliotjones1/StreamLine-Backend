@@ -343,7 +343,7 @@ class recommendedServices(generics.ListAPIView):
                     if service_row.iloc[0][i] is not None:
                         service_info["Packages"].append(
                             {
-                                "Version": service_row.iloc[0, i],
+                                "Version": service_row.iloc[0, i] if not pd.isna(service_row.iloc[0, i]) else "Not Available",
                                 "Price": service_row.iloc[0,i+1] if not pd.isna(service_row.iloc[0, i+1]) else "Not Available",
                             }
                             )
