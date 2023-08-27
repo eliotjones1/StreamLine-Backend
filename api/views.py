@@ -456,9 +456,9 @@ class seeServices(generics.ListAPIView):
         for service in services:
             top_four.append((service, fuzz.ratio(service, search_query)))
         top_four = sorted(top_four, key=lambda x: x[1], reverse=True)[:4]
-
+        print(top_four)
         output = []
-        for service in services:
+        for service in top_four:
             service_name = service_info.loc[service_info['Name'] == service]['Name'].values[0]
             service_link = service_info.loc[service_info['Name'] == service]['Link'].values[0]
             service_packages = []
@@ -473,10 +473,10 @@ class seeServices(generics.ListAPIView):
                 j += 2
             service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values
             output.append({
-                "service_name": service_name,
-                "service_image": service_image,
-                "service_link": service_link,
-                "service_packages": service_packages
+                "Name": service_name,
+                "Image": service_image,
+                "Link": service_link,
+                "Packages": service_packages
             })
         print(output)
         return Response(output, status=status.HTTP_200_OK)
