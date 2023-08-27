@@ -440,7 +440,7 @@ class StaffPicks(generics.ListAPIView):
 class seeServices(generics.ListAPIView):
     def get(self, request):
         service_images = pd.read_csv('api/random/serviceImages.csv')
-        service_info = pd.read_csv('api/random/pricing - Copy of Sheet 1-2.csv')
+        service_info = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
 
         # For each row in service_info, find the corresponding image in service_images by matching service_name in serviceImages to Name in service_info
         # Output the title, price, image, and link into a dict to return
