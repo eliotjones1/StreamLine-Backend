@@ -472,6 +472,8 @@ class seeServices(generics.ListAPIView):
                         "Price": service_info.iloc[i,j+1], 
                     })
                 j += 2
+            if service_packages == []:
+                service_packages.append({"Version": "Standard", "Price": 0.00})
             service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values
             output.append({
                 "Name": service_name,
