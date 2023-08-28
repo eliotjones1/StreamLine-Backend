@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import BlogPostSerializer
 from authentication.models import CustomUser
+import math
 
 
 
@@ -40,7 +41,10 @@ class getPagePosts(generics.ListAPIView):
         # Get the posts
         data = BlogPost.objects.order_by('-created_at')
         # There are only 6 per page, so we need to get the correct posts
-        data = data[(int(page)-1)*6:int(page)*6]
+        if int(page) > math.floor(len(data) / 6):
+            data = data[(int(page)-1)*6:]
+        else:
+            data = data[(int(page)-1)*6:int(page)*6]
         # Serialize the posts
         response = BlogPostSerializer(data, many=True).data
         return Response(response, status=status.HTTP_200_OK)
