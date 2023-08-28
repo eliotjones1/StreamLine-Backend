@@ -32,5 +32,17 @@ class getPost(generics.ListAPIView):
         # Serialize the post
         response = BlogPostSerializer(data).data
         return Response(response, status=status.HTTP_200_OK)
+    
+class getPagePosts(generics.ListAPIView):
+    def get(self, request):
+        # Get the page number
+        page = request.query_params.get('page')
+        # Get the posts
+        data = BlogPost.objects.order_by('-created_at')
+        # There are only 6 per page, so we need to get the correct posts
+        data = data[(page-1)*6:page*6]
+        # Serialize the posts
+        response = BlogPostSerializer(data, many=True).data
+        return Response(response, status=status.HTTP_200_OK)
 
 ## NEED TO ADD PAGINATION
