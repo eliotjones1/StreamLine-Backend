@@ -46,7 +46,8 @@ class getPagePosts(generics.ListAPIView):
         else:
             data = data[(int(page)-1)*6:int(page)*6]
         # Serialize the posts
-        response = BlogPostSerializer(data, many=True).data
+        posts = BlogPostSerializer(data, many=True).data
+        response = {"posts": posts, "totalPages": math.ceil(len(data) / 6)}
         return Response(response, status=status.HTTP_200_OK)
 
 ## NEED TO ADD PAGINATION
