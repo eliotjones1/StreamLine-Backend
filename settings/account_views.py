@@ -78,7 +78,7 @@ def createSubscription(request):
     # find image that corresponds to subscription_info['name']
     image_path = df.loc[df['service_name'] == subscription_info['name']]['logo_path'].values[0]
     user = CustomUser.objects.get(email=user_email)
-    this_subscription = ThirdPartySubscription.objects.create(user=user, subscription_name=subscription_info['name'], end_date=subscription_info['date'][:10], num_months=1, num_cancellations=0, is_active=True, subscription_price=subscription_info['price'], subscription_image_path=image_path, subscription_version=subscription_info['version'])
+    this_subscription = ThirdPartySubscription.objects.create(user=user, subscription_name=subscription_info['name'], end_date=subscription_info['date'][:10], num_months=1, num_cancellations=0, is_active=True, subscription_price=subscription_info['price'], subscription_image_path=image_path, subscription_version=subscription_info['version'], subscription_status = "Active")
     this_subscription.save()
     return Response(SubscriptionSerializer(this_subscription).data, status=status.HTTP_200_OK)
 
