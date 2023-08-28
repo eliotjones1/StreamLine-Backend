@@ -14,6 +14,7 @@ SECRET_KEY = "9fG2Jm5qZkRLpcYn6vjDWhYUdN1X3tH4" # Why are you here
 
 class getAllPosts(generics.ListAPIView):
     def get(self, request):
+        queryset = BlogPost.objects.all()
         # Get all blog posts
         data = BlogPost.objects.order_by('-created_at')
         # Serialize the posts
