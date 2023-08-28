@@ -40,7 +40,7 @@ class getPagePosts(generics.ListAPIView):
         # Get the posts
         data = BlogPost.objects.order_by('-created_at')
         # There are only 6 per page, so we need to get the correct posts
-        data = data[(page-1)*6:page*6]
+        data = data[(int(page)-1)*6:int(page)*6]
         # Serialize the posts
         response = BlogPostSerializer(data, many=True).data
         return Response(response, status=status.HTTP_200_OK)
