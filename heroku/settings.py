@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "settings",
     "newsletter",
     "recommendations",
+    "webhooks",
 ]
 
 MIDDLEWARE = [
