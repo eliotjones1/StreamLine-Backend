@@ -22,4 +22,4 @@ dj-database-url
 django-heroku
 gunicorn
 whitenoise
-
+django-background-tasks

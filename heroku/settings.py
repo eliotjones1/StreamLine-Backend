@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "newsletter",
     "recommendations",
     "webhooks",
+    "background_task",
 ]
 
 MIDDLEWARE = [

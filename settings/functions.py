@@ -4,6 +4,7 @@ from rest_framework import status
 import sendgrid
 from sendgrid.helpers.mail import Mail
 from .models import *
+from webhooks.tasks import *
 
 def store_temp_subs(user_sub):
     temp_subs = {}
@@ -47,6 +48,11 @@ def handleBasicAction(user_email, subscription, code):
     if code == 1:
         ## Send them an email saying their subscription will renew on x date
         ## Update subscription object with new expiration date
+        cur_subscription = ThirdPartySubscription.objects.get(user = user_email, subscription_name = subscription["name"])
+        cur_subscription.end_date += timezone.timedelta(days=30)
+        cur_subscription.save()
+
+        ## Add subscription name and date into email
         template_id = "d-65eff9edfd4f47e493b649f54bb336f6"
         message = Mail(
         from_email='ekj0512@gmail.com',
@@ -64,17 +70,31 @@ def handleBasicAction(user_email, subscription, code):
         except Exception as e:
             print(str(e))
             pass
+        return status.HTTP_200_OK
     elif code == 2:
+        send_cancellation_reminders(user_email, subscription, repeat=259200, repeat_until=subscription.end_date)
         cur_subscription = ThirdPartySubscription.objects.get(user = user_email, subscription_name = subscription["name"])
-        cur_subscription.end_date += timezone.timedelta(days=30)
+        cur_subscription.subscription_status = 'Cancelling'
         cur_subscription.save()
-        ## Send them an email saying they need to cancel their subscription by x date
-        ## Configure a webhook (in a bit) to send emails at 4 days and 1 day before expiration
-        ## Update subscription object with cancellation and num_cancellations
-        pass
+        ## Create confirm cancellation button to update info
+        return status.HTTP_200_OK
     elif code == 3:
-        ## Idk if we actually want to allow this for basic subscribers
-        pass
+        cur_subscription = subscription[0]
+        new_subscription = subscription[1]
+        cur_subscription = ThirdPartySubscription.objects.get(user = user_email, subscription_name = cur_subscription["name"])
+        create_subscription = ThirdPartySubscription.objects.get_or_create(user = user_email, subscription_name = new_subscription["name"])
+        cur_subscription.subscription_status = 'Cancelling'
+        cur_subscription.save()
+        create_subscription.subscription_status = 'Activating'
+        create_subscription.end_date = cur_subscription.end_date + timezone.timedelta(days=30)
+        create_subscription.subscription_price = new_subscription.subscription_price
+        create_subscription.subscription_image_path = new_subscription.subscription_image_path
+        create_subscription.num_months = new_subscription.num_months
+        create_subscription.num_cancellations = new_subscription.num_cancellations
+        create_subscription.subscription_version = new_subscription.subscription_version
+        create_subscription.save()
+        ## Create confirm cancellation button to update info
+        return status.HTTP_200_OK
     else:
         return status.HTTP_400_BAD_REQUEST
 

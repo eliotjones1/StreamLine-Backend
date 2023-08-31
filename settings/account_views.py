@@ -22,6 +22,7 @@ import pandas as pd
 from api.functions import *
 from datetime import datetime
 from datetime import timedelta
+from webhooks.tasks import *
 
 
 ## GOAL: Personalize our recommendations not only for TV and Movies but also for Streaming Services
@@ -122,6 +123,7 @@ class getSubscriptions(generics.ListAPIView):
                 out.append(SubscriptionSerializer(subscription).data)
         # order out by end date soonest to latest
         out = sorted(out, key=lambda k: k['end_date'])
+        update_status(user_email, repeat=86400)
         return Response(out, status=status.HTTP_200_OK)
 
 
