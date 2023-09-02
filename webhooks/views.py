@@ -30,6 +30,8 @@ def recieveStripeWebhook(request):
     print(data)
     # Handle the event
     if event.type == "customer.created":
+        if UserStripeCustomer.objects.filter(stripe_customer_id = data["data"]["object"]["id"]).exists():
+            return Response(status=status.HTTP_200_OK)
         user = CustomUser.objects.get(email = data["data"]["object"]["email"])
         new_customer = UserStripeCustomer(user = user, stripe_customer_id = data["data"]["object"]["id"])
         new_customer.save()
@@ -62,6 +64,7 @@ def recieveStripeWebhook(request):
             sl_sub.Premium_Expiration = None
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.updated":
+        print(data["data"]["object"]["customer"])
         customer = UserStripeCustomer.objects.get(stripe_customer_id = data["data"]["object"]["customer"])
         user = CustomUser.objects.get(email = customer.user.email)
         subscription = UserStripePayment.objects.get(user = user, stripe_customer_id = customer)
