@@ -119,7 +119,7 @@ class getSubscriptions(generics.ListAPIView):
         subscriptions = ThirdPartySubscription.objects.filter(user=user)
         out = []
         for subscription in subscriptions:
-            if subscription.subscription_status == "Active":
+            if subscription.subscription_status != "Expired":
                 out.append(SubscriptionSerializer(subscription).data)
         # order out by end date soonest to latest
         out = sorted(out, key=lambda k: k['end_date'])
