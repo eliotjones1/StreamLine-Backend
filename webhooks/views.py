@@ -52,7 +52,7 @@ def recieveStripeWebhook(request):
         new_subscription = UserStripePayment(user = user, stripe_customer_id = customer, date_of_payment = datetime.now().date(), payment_amount = data["data"]["object"]["plan"]["amount"] / 100, transaction = "StreamLine", transaction_status = data["data"]["object"]["status"])
         new_subscription.save()
 
-        if data["object"]["items"]["data"][0]["plan"]["id"] == "price_1NPdaQLPNbsO0xpZlJYcZdjo":
+        if data["data"]["object"]["items"]["data"][0]["plan"]["id"] == "price_1NPdaQLPNbsO0xpZlJYcZdjo":
             sl_sub = StreamLineSubscription.objects.get(user = user)
             sl_sub.Basic = False
             sl_sub.Basic_Expiration = None
