@@ -8,6 +8,10 @@ import stripe
 from .models import *
 from datetime import datetime
 from settings.models import StreamLineSubscription
+from serializers import *
+from api.views import isSessionActive
+from django.contrib.sessions.models import Session
+
 stripe.api_key = "sk_test_51NPcYzLPNbsO0xpZ3ypmarjukmXpUaySegVecBCiZEcfbiUrBxeuXBQU8QiafXpARoIUKdU2uqzdifzly9DlWedt00aO6ZevFh"
 
 # Create your views here.
@@ -71,4 +75,18 @@ def recieveStripeWebhook(request):
         customer.delete()
         return Response(status=status.HTTP_200_OK)
 
-
+class getPaymentsMade(generics.ListAPIView):
+    def get(self, request):
+        sessionid = request.COOKIES.get('sessionid')
+        # print(sessionid)
+        # Check if session is active
+        if isSessionActive(sessionid) == False:
+            return Response({'error': 'Session expired'}, status=status.HTTP_400_BAD_REQUEST)
+        # expects user_id at 0, subscription info (name, date, recurring) at 1
+        user_email = Session.objects.get(session_key=sessionid).get_decoded()['user_email']
+        if user_email is None:
+            return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        user = CustomUser.objects.get(email=user_email)
+        payments = UserStripePayment.objects.filter(user = user)
+        serializer = UserStripePaymentSerializer(payments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
