@@ -29,12 +29,12 @@ def recieveStripeWebhook(request):
     data = json.loads(payload)
     # Handle the event
     if event.type == "customer.created":
-        user = CustomUser.objects.get(user_email = data["data"]["object"]["email"])
+        user = CustomUser.objects.get(email = data["data"]["object"]["email"])
         new_customer = UserStripeCustomer(user = user, stripe_customer_id = data["data"]["object"]["id"])
         new_customer.save()
         return Response(status=status.HTTP_200_OK)
     elif event.type == "payment_method.attached":
-        user = CustomUser.objects.get(user_email = data["data"]["object"]["billing_details"]["email"])
+        user = CustomUser.objects.get(email = data["data"]["object"]["billing_details"]["email"])
         customer = UserStripeCustomer.objects.get(user = user, stripe_customer_id = data["data"]["object"]["customer"])
         payment_info = UserPaymentInfo(user = user, stripe_customer_id = customer, stripe_payment_info = data["data"]["card"])
         payment_info.save()
@@ -43,7 +43,7 @@ def recieveStripeWebhook(request):
         ## Create new subscription object
     
         customer = UserStripeCustomer.objects.get(stripe_customer_id = data["data"]["object"]["customer"])
-        user = CustomUser.objects.get(user_email = customer.user.user_email)
+        user = CustomUser.objects.get(email = customer.user.email)
         new_subscription = UserStripePayment(user = user, stripe_customer_id = customer, date_of_payment = datetime.fromtimestamp(data["data"]["object"]["created"]), payment_amount = data["data"]["object"]["plan"]["amount"] / 10, transaction = "StreamLine", transaction_status = data["data"]["object"]["status"])
         new_subscription.save()
 
@@ -62,18 +62,21 @@ def recieveStripeWebhook(request):
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.updated":
         customer = UserStripeCustomer.objects.get(stripe_customer_id = data["data"]["object"]["customer"])
-        user = CustomUser.objects.get(user_email = customer.user.user_email)
+        user = CustomUser.objects.get(email = customer.user.email)
         subscription = UserStripePayment.objects.get(user = user, stripe_customer_id = customer)
         subscription.transaction_status = data["data"]["object"]["status"] 
         subscription.save()
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.deleted":
         customer = UserStripeCustomer.objects.get(stripe_customer_id = data["data"]["object"]["customer"])
-        user = CustomUser.objects.get(user_email = customer.user.user_email)
+        user = CustomUser.objects.get(email = customer.user.email)
         subscription = UserStripePayment.objects.get(user = user, stripe_customer_id = customer)
         subscription.delete()
         customer.delete()
         return Response(status=status.HTTP_200_OK)
+    else:
+        print(payload)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class getPaymentsMade(generics.ListAPIView):
     def get(self, request):
