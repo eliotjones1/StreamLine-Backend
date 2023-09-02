@@ -30,7 +30,7 @@ def recieveStripeWebhook(request):
     print(data)
     # Handle the event
     if event.type == "customer.created":
-        if UserStripeCustomer.objects.filter(stripe_customer_id = data["data"]["object"]["id"]).exists():
+        if UserStripeCustomer.objects.filter(email= data["data"]["object"]["email"]).exists():
             return Response(status=status.HTTP_200_OK)
         user = CustomUser.objects.get(email = data["data"]["object"]["email"])
         new_customer = UserStripeCustomer(user = user, stripe_customer_id = data["data"]["object"]["id"])
