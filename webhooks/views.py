@@ -27,6 +27,7 @@ def recieveStripeWebhook(request):
     except ValueError as e:
         return Response(status=status.HTTP_400_BAD_REQUEST)
     data = json.loads(payload)
+    print(data)
     # Handle the event
     if event.type == "customer.created":
         user = CustomUser.objects.get(email = data["data"]["object"]["email"])
@@ -44,7 +45,7 @@ def recieveStripeWebhook(request):
     
         customer = UserStripeCustomer.objects.get(stripe_customer_id = data["data"]["object"]["customer"])
         user = CustomUser.objects.get(email = customer.user.email)
-        new_subscription = UserStripePayment(user = user, stripe_customer_id = customer, date_of_payment = datetime.fromtimestamp(data["data"]["object"]["created"]), payment_amount = data["data"]["object"]["plan"]["amount"] / 10, transaction = "StreamLine", transaction_status = data["data"]["object"]["status"])
+        new_subscription = UserStripePayment(user = user, stripe_customer_id = customer, date_of_payment = datetime.now().date(), payment_amount = data["data"]["object"]["plan"]["amount"] / 100, transaction = "StreamLine", transaction_status = data["data"]["object"]["status"])
         new_subscription.save()
 
         if data["object"]["items"]["data"][0]["plan"]["id"] == "price_1NPdaQLPNbsO0xpZlJYcZdjo":
