@@ -24,7 +24,7 @@ def update_status(user_email):
             if date < datetime.now():
                 subscription.status = 'Expired'
                 subscription.save()
-        if status == "Activating":
+        if status == "Pending":
             if date < datetime.now():
                 subscription.status = 'Active'
                 subscription.save()
