@@ -8,7 +8,7 @@ import stripe
 from .models import *
 from datetime import datetime
 from settings.models import StreamLineSubscription
-from serializers import *
+from .serializers import *
 from api.views import isSessionActive
 from django.contrib.sessions.models import Session
 
