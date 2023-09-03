@@ -41,7 +41,7 @@ def recieveStripeWebhook(request):
     elif event.type == "payment_method.attached":
         user = CustomUser.objects.get(email = data["data"]["object"]["billing_details"]["email"])
         customer = UserStripeCustomer.objects.get(user = user, stripe_customer_id = data["data"]["object"]["customer"])
-        payment_info = UserPaymentInfo(user = user, stripe_customer_id = customer, stripe_payment_info = data["data"]["card"])
+        payment_info = UserPaymentInfo(user = user, stripe_customer_id = customer, stripe_payment_info = data["data"]["object"]["card"])
         payment_info.save()
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.created":
