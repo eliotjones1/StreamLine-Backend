@@ -96,6 +96,19 @@ class getPaymentsMade(generics.ListAPIView):
         if user_email is None:
             return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
         user = CustomUser.objects.get(email=user_email)
-        payments = UserStripePayment.objects.filter(user = user)
-        serializer = UserStripePaymentSerializer(payments, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        payments = UserStripePayment.objects.filter(user = user).values_list()
+        payment_info = UserPaymentInfo.objects.filter(user = user)
+        card = json.loads(payment_info.stripe_payment_info)        
+        output = []
+        for payment in payments:
+            output.append({
+                "img": "",
+                "name": payment.transaction,
+                "amount": payment.payment_amount,
+                "date": payment.date_of_payment,
+                "status": payment.transaction_status,
+                "account": card["brand"],
+                "accountNumber": card["last4"],
+                "expiry": str(card["exp_month"]) + "/" + str(card["exp_year"]),
+            })
+        return Response(output, status=status.HTTP_200_OK)
