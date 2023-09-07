@@ -6,9 +6,5 @@ from django.db import models
 
 
 admin.site.register(CustomUser)
-class SessionAdmin(models.Model):
-    def _session_data(self, obj):
-        return obj.get_decoded()
-    list_display = ['session_key', '_session_data', 'expire_date']
-admin.site.register(Session, SessionAdmin)
+admin.site.register(Session)
 # Register your models here.
