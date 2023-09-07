@@ -6,7 +6,7 @@ from django.db import models
 
 
 admin.site.register(CustomUser)
-class SessionAdmin(models.ModelAdmin):
+class SessionAdmin(models.Model):
     def _session_data(self, obj):
         return obj.get_decoded()
     list_display = ['session_key', '_session_data', 'expire_date']
