@@ -183,7 +183,7 @@ def register(request):
     return response
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated, ])
+@permission_classes([AllowAny, ])
 def logout(request):
     # Delete the session
     session_key = request.COOKIES.get('sessionid')
