@@ -13,9 +13,8 @@ urlpatterns = [
     path('subscribe/cancel/', CancelSubscription, name='cancel-subscription'),
     path('user-subscriptions/create/', createSubscription, name='create-subscription'),
     path('user-subscriptions/cancel/', removeSubscription, name='remove-subscription'),
+    path('user-subscriptions/renew/', renewSubscription, name='renew-subscription'),
     path('user-subscriptions/view/', getSubscriptions.as_view(), name='view-subscriptions'),
-    path('user-subscriptions/action/', blah.as_view(), name='action-subscriptions'),
-    path('user-subscriptions/set-choice/', handleSelection, name='set-choice'),
     path('avail-subscriptions/search/', AvailSubs.as_view(), name='search-subscriptions'),
     path('tosCompliance/', checkTOSStatus.as_view(), name='tos-compliance'),
     path('tosCompliance/update/', agreeTOS, name='update-tos-compliance'),
@@ -24,6 +23,5 @@ urlpatterns = [
     path('contact/', ContactFormSub, name='contact-us'),
     path('is-authenticated/', isAuthenticated.as_view(), name='is-authenticated'),
     path('user-subscriptions/recommendations/', recommendedServices.as_view(), name='get-recommendations'),
-    path('user-subscriptions/choose/', actionItems, name='choose-action'),
 ]
 

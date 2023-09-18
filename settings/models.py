@@ -57,7 +57,7 @@ class ThirdPartySubscription(models.Model):
     num_cancellations = models.IntegerField(default = 0)
     subscription_version = models.CharField(max_length=100) 
     subscription_status = models.CharField(max_length=100)
-
+    subscription_next_action = models.CharField(max_length=100, default = "None") 
 
 class UserContactRequest(models.Model):
     user_email = models.CharField(max_length=100)

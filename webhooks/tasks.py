@@ -22,8 +22,15 @@ def update_status(user_email):
                 subscription.save()
         if status == "Expiring":
             if date < datetime.now():
-                subscription.status = 'Expired'
-                subscription.save()
+                if subscription.subscription_next_action == "cancel":
+                    subscription.subscription_status = 'Expired'
+                    subscription.save()
+                elif subscription.subscription_next_action == "renew":
+                    subscription.subscription_status = 'Active'
+                    subscription.end_date += timedelta(days=30)
+                    subscription.save()
+                else:
+                    pass
         if status == "Pending":
             if date < datetime.now():
                 subscription.status = 'Active'
