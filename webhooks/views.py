@@ -101,6 +101,7 @@ class getPaymentsMade(generics.ListAPIView):
         card = payment_info.stripe_payment_info       
         output = []
         for payment in payments:
+            print(payment)
             output.append({
                 "img": "",
                 "name": payment.transaction,
