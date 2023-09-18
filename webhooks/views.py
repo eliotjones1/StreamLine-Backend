@@ -98,8 +98,7 @@ class getPaymentsMade(generics.ListAPIView):
         user = CustomUser.objects.get(email=user_email)
         payments = UserStripePayment.objects.filter(user = user).values_list()
         payment_info = UserPaymentInfo.objects.get(user = user)
-        print(payment_info.stripe_payment_info)
-        card = json.loads(payment_info.stripe_payment_info)        
+        card = payment_info.stripe_payment_info       
         output = []
         for payment in payments:
             output.append({
