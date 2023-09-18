@@ -11,6 +11,7 @@ from settings.models import StreamLineSubscription
 from .serializers import *
 from api.views import isSessionActive
 from django.contrib.sessions.models import Session
+import ast
 
 stripe.api_key = "sk_test_51NPcYzLPNbsO0xpZ3ypmarjukmXpUaySegVecBCiZEcfbiUrBxeuXBQU8QiafXpARoIUKdU2uqzdifzly9DlWedt00aO6ZevFh"
 
