@@ -104,10 +104,10 @@ class getPaymentsMade(generics.ListAPIView):
             print(payment)
             output.append({
                 "img": "",
-                "name": payment.transaction,
-                "amount": payment.payment_amount,
-                "date": payment.date_of_payment,
-                "status": payment.transaction_status,
+                "name": payment[6],
+                "amount": payment[5],
+                "date": payment[4],
+                "status": payment[7],
                 "account": card["brand"],
                 "accountNumber": card["last4"],
                 "expiry": str(card["exp_month"]) + "/" + str(card["exp_year"]),
