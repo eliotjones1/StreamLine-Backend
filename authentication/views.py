@@ -1,21 +1,19 @@
-from django.shortcuts import render
-
 # Create your views here.
-from django.shortcuts import render
-from django.contrib.auth import get_user_model, logout, authenticate
-from django.core.exceptions import ImproperlyConfigured
-from rest_framework import viewsets, status
-from rest_framework.decorators import action, api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
+import sendgrid
+from django.contrib.auth import get_user_model, logout
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
-import sendgrid
+from django.core.exceptions import ImproperlyConfigured
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 from sendgrid.helpers.mail import Mail
+
+from settings.models import *
 from . import serializers
 from .utils import get_and_authenticate_user, create_user_account
-from .models import CustomUser
-from settings.models import *
+
 # Create your views here.
 
 User = get_user_model()
