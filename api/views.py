@@ -442,6 +442,7 @@ class seeServices(generics.ListAPIView):
         service_images = pd.read_csv('api/random/serviceImages.csv')
         service_info = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
         
+        service_info = service_info.fillna("null")
         # Merge service_info and service_images based on service name
         aggregated_table = pd.merge(service_info, service_images, 
                                     left_on='Name', right_on='service_name', 
