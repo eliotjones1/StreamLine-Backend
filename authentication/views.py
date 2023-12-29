@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from sendgrid.helpers.mail import Mail
 
 from settings.models import *
+from webhooks.models import *
 from . import serializers
 from .utils import get_and_authenticate_user, create_user_account
 
@@ -62,6 +63,14 @@ class AuthViewSet(viewsets.GenericViewSet):
         # create user subscription
         user_subscription = StreamLineSubscription(user = user_exists, Premium = False, Basic = False, Premium_Expiration = None, Basic_Expiration = None, stripe_customer_id = None, stripe_subscription_id = None)
         user_subscription.save()
+
+
+        user_stripe = UserStripeCustomer(user = user_exists, stripe_customer_id = "")
+        user_stripe.save()
+
+        user_payment = UserPaymentInfo(user = user_exists, stripe_customer_id = user_stripe, stripe_payment_info = "")
+        user_payment.save()
+        
         session = SessionStore()
         session['user'] = user
         session.save()

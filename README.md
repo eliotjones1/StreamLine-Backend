@@ -26,7 +26,13 @@
 
 ## HEROKU
 
-- Home
+- admin/: for admin
+- api/ then any api endpoint
+- auth/ then any authentication endpoint
+- settings/ then any settings endpoint
+- newsletter/ then any newsletter endpoint
+- recommendations/ then any recommendations endpoint
+- webhooks/ then any webhooks endpoint
 
 ## NEWSLETTER
 

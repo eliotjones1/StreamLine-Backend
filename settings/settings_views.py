@@ -156,11 +156,6 @@ def deleteAccount(request):
     user_settings.delete()
     user.delete()
     user_data.delete()
-    # if stripe.Customer.list(email=user_email).data:
-    #     customer = stripe.Customer.list(email=user_email).data[0]
-    #     if stripe.Subscription.list(customer=customer['id']).data:
-    #         stripe.Subscription.delete(user_sub.stripe_subscription_id)
-    #     stripe.Customer.delete(customer['id'])
     user_sub.delete()
     return Response(status=status.HTTP_200_OK)
 

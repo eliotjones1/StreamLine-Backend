@@ -439,50 +439,15 @@ class StaffPicks(generics.ListAPIView):
 
 class seeServices(generics.ListAPIView):
     def get(self, request):
-        search_query = request.query_params.get('search', None)
-        if search_query is None:
-            return Response({'error': 'Missing search query'}, status=status.HTTP_400_BAD_REQUEST)
-        
         service_images = pd.read_csv('api/random/serviceImages.csv')
         service_info = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
+        
+        # Merge service_info and service_images based on service name
+        aggregated_table = pd.merge(service_info, service_images, 
+                                    left_on='Name', right_on='service_name', 
+                                    how='inner')
 
-        # For each row in service_info, find the corresponding image in service_images by matching service_name in serviceImages to Name in service_info
-        # Output the title, price, image, and link into a dict to return
-        ## make a list of all of the elements in service_info["Name"]
-
-        services = service_info['Name'].tolist()
-        # find top four services closest to search_query
-        top_four = []
-        for service in services:
-            top_four.append((service, fuzz.ratio(service, search_query)))
-        top_four = sorted(top_four, key=lambda x: x[1], reverse=True)[:4]
-        print(top_four)
-        output = []
-        for tuple in top_four:
-            service = tuple[0]
-            service_name = service_info.loc[service_info['Name'] == service]['Name'].values[0]
-            service_link = service_info.loc[service_info['Name'] == service]['Link'].values[0]
-            service_packages = []
-            i = service_info.index[service_info['Name'] == service].tolist()[0]
-            j = 1
-            while j < 9:
-                if not pd.isna(service_info.iloc[i, j]) and not pd.isna(service_info.iloc[i, j+1]):
-                    service_packages.append({
-                        "Version": service_info.iloc[i,j], 
-                        "Price": service_info.iloc[i,j+1], 
-                    })
-                j += 2
-            if service_packages == []:
-                service_packages.append({"Version": "Standard", "Price": 0.00})
-            service_image = service_images.loc[service_images['service_name'] == service_name]['logo_path'].values
-            output.append({
-                "Name": service_name,
-                "Image": service_image,
-                "Link": service_link,
-                "Packages": service_packages
-            })
-        print(output)
-        return Response(output, status=status.HTTP_200_OK)
+        return Response(aggregated_table.to_dict(), status=status.HTTP_200_OK)
         
 
 class getAllUpcoming(generics.ListAPIView):
