@@ -224,7 +224,7 @@ def generateBundle(request):
                 output["Type"].append(object["media_type"])
     realOutput = getServiceImages(output)
     print(realOutput)
-    user_data.bundle = realOutput
+    user_data.bundle = [realOutput]
     user_data.budget = realOutput["Total_Cost"]
     user_data.save()
     return Response(status=status.HTTP_200_OK)
@@ -308,7 +308,7 @@ class recommendedServices(generics.ListAPIView):
             return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
         user = CustomUser.objects.get(email=user_email)
         # Assume bundles have already been generated
-        bundle = UserData.objects.get(user=user).bundle
+        bundle = UserData.objects.get(user=user).bundle[0]
         current_services = ThirdPartySubscription.objects.filter(user=user)
         current_services = list(current_services.values_list('subscription_name', flat=True))
         output = []
