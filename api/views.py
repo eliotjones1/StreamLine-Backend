@@ -1,25 +1,15 @@
-from django.shortcuts import render
-
 # Create your views here.
-import requests
-import threading
-from django.shortcuts import render
 from datetime import datetime
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .functions import *
-import cvxpy as cp
-from authentication.models import CustomUser
-from settings.serializers import UserDataSerializer
-from settings.models import UserData, ThirdPartySubscription
-from django.core.cache import cache
-from fuzzywuzzy import fuzz
+
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from rest_framework.decorators import api_view
+
+from authentication.models import CustomUser
+from settings.models import UserData
+from settings.serializers import UserDataSerializer
+from .functions import *
 from .models import StaffPick
-import pandas as pd
-from datetime import datetime
 
 # Create your views here.
 format_str = "%Y-%m-%d"
@@ -442,12 +432,19 @@ class seeServices(generics.ListAPIView):
         service_images = pd.read_csv('api/random/serviceImages.csv')
         service_info = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
         
-        service_info = service_info.fillna("null")
+        service_info = service_info.fillna("Not Available")
+
+        service_info['Package 1'] = service_info['Package 1'].replace('Not Available', 'Free')
+        service_info['Add-On'] = service_info['Add-On'].map({0: 'No', 1: 'Yes'})
+
+        service_info = service_info.fillna("Not Available")
         # Merge service_info and service_images based on service name
 
         aggregated_table = pd.merge(service_info, service_images, 
                                     left_on='Name', right_on='service_name', 
                                     how='inner').drop(columns=['service_name', 'id'])
+
+
 
         return Response(aggregated_table.to_dict(), status=status.HTTP_200_OK)
         
