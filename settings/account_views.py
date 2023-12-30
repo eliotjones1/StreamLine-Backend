@@ -4,7 +4,6 @@ from rest_framework.decorators import api_view
 
 from api.functions import *
 from api.views import isSessionActive
-from webhooks.tasks import *
 from .functions import *
 from .serializers import SubscriptionSerializer
 
@@ -162,8 +161,22 @@ def generateBundle(request):
 
     list_data = []
     for item in input:
-        list_data.append(getData(item))
-    print(list_data)
+        temp_data = {}
+        item_info = getData(item)
+        if item['media_type'] == 'tv':
+            temp_data['title'] = item_info['name']
+            temp_data['release_data'] = item_info['first_air_date']
+            temp_data['image'] = item_info['poster_path']
+            temp_data['streaming_providers'] = item_info['streaming_providers']
+            temp_data['media_type'] = item_info['media_type']
+            list_data.append(temp_data)
+        else:
+            temp_data['title'] = item_info['title']
+            temp_data['release_data'] = item_info['release_date']
+            temp_data['image'] = item_info['poster_path']
+            temp_data['streaming_providers'] = item_info['streaming_providers']
+            temp_data['media_type'] = item_info['media_type']
+            list_data.append(temp_data)
     providers, prices, services = modify_input(list_data)
 
     ## Run optimization, but only on items not on current subscriptions
