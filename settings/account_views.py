@@ -78,7 +78,7 @@ def createSubscription(request):
     user_email = Session.objects.get(session_key=sessionid).get_decoded()['user_email']
     if user_email is None:
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
-    subscription_info = request.data
+    subscription_info = request.data['body']
     print(subscription_info)
     # import dataframe from api/random/serviceImages.csv
     df = pd.read_csv('api/random/serviceImages.csv')
