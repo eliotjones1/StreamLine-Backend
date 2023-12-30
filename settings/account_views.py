@@ -79,6 +79,7 @@ def createSubscription(request):
     if user_email is None:
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
     subscription_info = request.data
+    print(subscription_info)
     # import dataframe from api/random/serviceImages.csv
     df = pd.read_csv('api/random/serviceImages.csv')
     # find image that corresponds to subscription_info['name']

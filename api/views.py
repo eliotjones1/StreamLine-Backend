@@ -444,8 +444,6 @@ class seeServices(generics.ListAPIView):
                                     left_on='Name', right_on='service_name', 
                                     how='inner').drop(columns=['service_name', 'id'])
 
-
-
         return Response(aggregated_table.to_dict(), status=status.HTTP_200_OK)
         
 
