@@ -1,7 +1,6 @@
 Name,Package 1,Package 1 Price,Package 2,Package 2 Price,Package 3,Package 3 Price,Package 4,Package 4 Price,Add-On,Link
 Netflix,Basic with ads,6.99,Basic,9.99,Standard,15.49,Premium,19.99,0,https://www.netflix.com
 Amazon Prime Video,Prime Video Standalone,8.99,,,,,,,0,https://www.primevideo.com
-Disney Plus,With Ads,8,Ad-Free,11,"Bundle with Hulu, ESPN",13,,,0,https://www.disneyplus.com
 HBO,Regular (no Max),15.99,,,,,,,0,https://www.hbo.com
 fuboTV,Pro,74.99,Elite,84.99,Premier,94.99,Latino,32.99,0,https://www.fubo.tv
 Hulu,With Ads,7.99,Ad-Free,14.99,Live TV with Ads,69.99,Live TV Ad-Free,82.99,0,https://www.hulu.com
