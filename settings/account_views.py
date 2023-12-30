@@ -311,11 +311,10 @@ class recommendedServices(generics.ListAPIView):
         bundle = UserData.objects.get(user=user).bundle
         current_services = ThirdPartySubscription.objects.filter(user=user)
         current_services = list(current_services.values_list('subscription_name', flat=True))
-        default_bundle = bundle[0]
         output = []
         service_df = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
         service_images = pd.read_csv('api/random/serviceImages.csv')
-        for service in default_bundle["Streaming_Services"]:
+        for service in bundle["Streaming_Services"]:
             if service not in current_services:
                 # find row in service_df that corresponds to service
                 service_info = {}
