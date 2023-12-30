@@ -444,9 +444,10 @@ class seeServices(generics.ListAPIView):
         
         service_info = service_info.fillna("null")
         # Merge service_info and service_images based on service name
+
         aggregated_table = pd.merge(service_info, service_images, 
                                     left_on='Name', right_on='service_name', 
-                                    how='inner')
+                                    how='inner').drop(columns=['service_name', 'id'])
 
         return Response(aggregated_table.to_dict(), status=status.HTTP_200_OK)
         
