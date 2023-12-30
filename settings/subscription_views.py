@@ -31,6 +31,7 @@ class ReturnSettings(generics.ListAPIView):
         if user_email is None:
             return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        output = StreamLineSubscription.objects.get(Email=user_email)
+        user = CustomUser.objects.get(email=user_email)
+        output = StreamLineSubscription.objects.get(user=user)
         serializer = UserSubscriptionSerializer(output)
         return Response(serializer.data)
