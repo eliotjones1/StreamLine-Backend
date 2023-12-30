@@ -367,11 +367,9 @@ def runOptimization(request):
 
     providers, prices, services = modify_input(data)
     streamLine = optimize1(providers, prices, services, budget, data)
-    maximal = optimize2(providers, prices, services, data)
-    minimal = optimize3(providers, prices, services, budget, data)
-    current.bundle = [streamLine, maximal, minimal]
-    current.save()
-    return Response(status = status.HTTP_200_OK)
+    # current.bundle.append(streamLine)
+    # current.save()
+    return Response(streamLine, status = status.HTTP_200_OK)
 
 
 class StaffPicks(generics.ListAPIView):
