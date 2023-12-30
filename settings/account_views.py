@@ -157,10 +157,9 @@ def generateBundle(request):
 
     # Get all titles on watchlist, current subscriptions
     subscriptions = list(cur_subs.values_list('subscription_name', flat=True))
-    input = user_data.media
 
     list_data = []
-    for item in input:
+    for item in user_data.media:
         temp_data = {}
         item_info = getData(item)
         if item['media_type'] == 'tv':
@@ -220,7 +219,7 @@ def generateBundle(request):
             output["Movies_and_TV_Shows"].append(m)
 
     for media in output["Movies_and_TV_Shows"]:
-        for object in input:
+        for object in list_data:
             if media == object["title"]:
                 output["Type"].append(object["type"])
     realOutput = getServiceImages(output)
