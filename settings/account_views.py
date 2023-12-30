@@ -159,9 +159,11 @@ def generateBundle(request):
     # Get all titles on watchlist, current subscriptions
     subscriptions = list(cur_subs.values_list('subscription_name', flat=True))
     input = user_data.media
+
     list_data = []
     for item in input:
         list_data.append(getData(item))
+    print(list_data)
     providers, prices, services = modify_input(list_data)
 
     ## Run optimization, but only on items not on current subscriptions

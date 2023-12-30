@@ -113,7 +113,7 @@ def getStreamingProviderShow(id):
             
 def modify_input(input):
     # Expects a list of movies or tv shows with the following inputs:
-    # title, release date, image, streaming providers, media type
+    # title, release_date, image, streaming_providers, media_type
     # STOP HERE AND MAKE SURE THE INPUT IS IN THIS FORMAT
     # THIS IS SETUP TO RUN LOCALLY ON ELIOT'S COMPUTER
     # YOU WILL NEED TO CHANGE THE PATH TO THE CSV FILE
