@@ -221,7 +221,7 @@ def generateBundle(request):
     for media in output["Movies_and_TV_Shows"]:
         for object in list_data:
             if media == object["title"]:
-                output["Type"].append(object["type"])
+                output["Type"].append(object["media_type"])
     realOutput = getServiceImages(output)
     print(realOutput)
     user_data.bundle = realOutput
