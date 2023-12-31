@@ -34,30 +34,15 @@ def find_trending(services):
             continue  # Skip to next page on error
 
         for item in response.json().get('results', []):
-            media_type = item['media_type']
-            media_id = item['id']
-            url = base_url + "/" + media_type + "/" + str(media_id) + provider_url
-            providers_response = requests.get(url, headers=headers)
-            print(providers_response)
-            temp.append(item)
-            if providers_response.status_code == 200:
-                providers_data = providers_response.json().get('results', {})
-                for service in services:
-                    if service in providers_data:
-                        results.append(item)
-                        services.remove(service)
-                        break
-    print(results)
-    print(temp[:3])
-    if not results:
-        return temp[:3]
-    else:
-        return results
+            if len(temp) < 3:
+                temp.append(getData(item))
+    return temp
 
 
 ##################################
 
 class FeaturedContent(generics.ListAPIView):
+    # Would love to find a way to get this specific to their services but might not be feasible
     def get(self, request):
         sessionid = request.COOKIES.get('sessionid')
         if isSessionActive(sessionid) == False:
@@ -70,8 +55,5 @@ class FeaturedContent(generics.ListAPIView):
         subscriptions = ThirdPartySubscription.objects.filter(user=user)
 
         subscriptions = [subscription for subscription in subscriptions if subscription.subscription_status != "Expired"]
-        out = find_trending(subscriptions)
-
-
-
-        return Response(out, status=status.HTTP_200_OK)
+        trending = find_trending(subscriptions)
+        return Response(trending, status=status.HTTP_200_OK)
