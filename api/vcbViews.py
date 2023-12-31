@@ -26,25 +26,24 @@ def find_trending(services):
     provider_url = "/watch/providers"
     results = []
     temp = []
-    while services:
-        for page in range(1):  # Iterate over 10 pages
-            response = requests.get(f"{base_url}{trending}?page={page}", headers=headers)
-            if response.status_code != 200:
-                continue  # Skip to next page on error
+    for page in range(1):  # Iterate over 10 pages
+        response = requests.get(f"{base_url}{trending}?page={page}", headers=headers)
+        if response.status_code != 200:
+            continue  # Skip to next page on error
 
-            for item in response.json().get('results', []):
-                media_type = item['media_type']
-                media_id = item['id']
-                providers_response = requests.get(f"{base_url}/{media_type}/{media_id}{provider_url}", headers=headers)
-                if page == 1:
-                    temp.append(item)
-                if providers_response.status_code == 200:
-                    providers_data = providers_response.json().get('results', {})
-                    for service in services:
-                        if service in providers_data:
-                            results.append(item)
-                            services.remove(service)
-                            break
+        for item in response.json().get('results', []):
+            media_type = item['media_type']
+            media_id = item['id']
+            providers_response = requests.get(f"{base_url}/{media_type}/{media_id}{provider_url}", headers=headers)
+            if page == 1:
+                temp.append(item)
+            if providers_response.status_code == 200:
+                providers_data = providers_response.json().get('results', {})
+                for service in services:
+                    if service in providers_data:
+                        results.append(item)
+                        services.remove(service)
+                        break
     if not results:
         return temp[:3]
     else:
