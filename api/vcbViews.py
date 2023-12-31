@@ -28,6 +28,7 @@ def find_trending(services):
     temp = []
     for page in range(1):  # Iterate over 10 pages
         response = requests.get(f"{base_url}{trending}?page={page}", headers=headers)
+        print(response)
         if response.status_code != 200:
             continue  # Skip to next page on error
 
@@ -35,6 +36,7 @@ def find_trending(services):
             media_type = item['media_type']
             media_id = item['id']
             providers_response = requests.get(f"{base_url}/{media_type}/{media_id}{provider_url}", headers=headers)
+            print(providers_response)
             if page == 1:
                 temp.append(item)
             if providers_response.status_code == 200:
@@ -44,6 +46,8 @@ def find_trending(services):
                         results.append(item)
                         services.remove(service)
                         break
+    print(results)
+    print(temp[:3])
     if not results:
         return temp[:3]
     else:
