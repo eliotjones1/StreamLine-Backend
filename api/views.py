@@ -115,11 +115,9 @@ def saveMedia(request):
 
     # Expects a dict with "id" and "type" as keys
     object = request.data
-    print(object)
     user_exists = CustomUser.objects.get(email=user_email)
     current = UserData.objects.get(user_id=user_exists)
     cur_list = current.media
-    print(cur_list)
     # Get all values corresponding to the "id" key in each dict:
     ids = []
     types = []
@@ -236,7 +234,6 @@ class returnUserData(generics.ListAPIView):
 @api_view(['POST'])
 def returnInfo(request):
     object = request.data
-    print(object)
     return Response(getData(object))
 
 
@@ -303,7 +300,6 @@ def optimizeInTheBackground(media_list):
 @api_view(['POST'])
 def runOptimization(request):
     media_list = request.data
-    print(media_list)
     sessionid = request.COOKIES.get('sessionid')
     user_email = Session.objects.get(
             session_key=sessionid).get_decoded()['user_email']
@@ -480,7 +476,6 @@ class getAllUpcoming(generics.ListAPIView):
         for movie in new_movies:
                         # Check if it is released this week
             if movie['release_date'] is not None and datetime.strptime(movie['release_date'][:10], format_str).date() >= datetime.now().date():
-                print(movie["title"])
                 # Check if it is on a subscription
                 movie['media_type'] = "movie"
                 output.append(movie)

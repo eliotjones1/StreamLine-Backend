@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from .vcbViews import *
 
 urlpatterns = [
     path('search/all', returnAll.as_view(), name='return-all'),
@@ -16,4 +17,6 @@ urlpatterns = [
     path('search/services/', seeServices.as_view(), name='see-services'),
     path('get-upcoming/', getAllUpcoming.as_view(), name='get-upcoming'),
     path('in-user-watchlist/', checkInList.as_view(), name='in-user-watchlist'),
+    path('featured-content/', FeaturedContent.as_view(), name='featured-content'),
+    
 ]

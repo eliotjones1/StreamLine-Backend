@@ -21,6 +21,5 @@ urlpatterns = [
     path('contact/', ContactFormSub, name='contact-us'),
     path('is-authenticated/', isAuthenticated.as_view(), name='is-authenticated'),
     path('user-subscriptions/recommendations/', recommendedServices.as_view(), name='get-recommendations'),
-    path('featured-content/', FeaturedContent.as_view(), name='featured-content'),
 ]
 
