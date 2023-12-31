@@ -26,8 +26,8 @@ def find_trending(services):
     provider_url = "/watch/providers"
     results = []
     temp = []
-    for page in range(1):  # Iterate over 10 pages
-        url = "https://api.themoviedb.org/3/trending/all/week?page=" + str(page)
+    for _ in range(1):  # Iterate over 10 pages
+        url = "https://api.themoviedb.org/3/trending/all/week?language=en-US"
         response = requests.get(url, headers=headers)
         print(response)
         if response.status_code != 200:
@@ -39,8 +39,7 @@ def find_trending(services):
             url = base_url + "/" + media_type + "/" + str(media_id) + provider_url
             providers_response = requests.get(url, headers=headers)
             print(providers_response)
-            if page == 1:
-                temp.append(item)
+            temp.append(item)
             if providers_response.status_code == 200:
                 providers_data = providers_response.json().get('results', {})
                 for service in services:
