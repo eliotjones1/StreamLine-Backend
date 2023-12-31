@@ -16,7 +16,7 @@ from settings.models import *
 
 ####### HELPER FUNCTIONS ########
 
-def find_trending_on_services(services):
+def find_trending(services):
     base_url = "https://api.themoviedb.org/3"
     headers = {
         "accept": "application/json",
@@ -27,7 +27,7 @@ def find_trending_on_services(services):
     results = []
     temp = []
     while services:
-        for page in range(1, 11):  # Iterate over 10 pages
+        for page in range(1):  # Iterate over 10 pages
             response = requests.get(f"{base_url}{trending}?page={page}", headers=headers)
             if response.status_code != 200:
                 continue  # Skip to next page on error
@@ -66,6 +66,5 @@ class FeaturedContent(generics.ListAPIView):
         subscriptions = ThirdPartySubscription.objects.filter(user=user)
 
         subscriptions = [subscription for subscription in subscriptions if subscription.subscription_status != "Expired"]
-        out = find_trending_on_services(subscriptions)
-
+        out = find_trending(subscriptions)
         return Response(out, status=status.HTTP_200_OK)
