@@ -302,7 +302,7 @@ def optimizeInTheBackground(media_list):
 
 @api_view(['POST'])
 def runOptimization(request):
-    media_list = request.data[0]
+    media_list = request.data
     print(media_list)
     sessionid = request.COOKIES.get('sessionid')
     user_email = Session.objects.get(
