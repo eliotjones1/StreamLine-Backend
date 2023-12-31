@@ -27,7 +27,7 @@ def find_trending(services):
     results = []
     temp = []
     for page in range(1):  # Iterate over 10 pages
-        url = base_url + trending + "?page=" + str(page)
+        url = "https://api.themoviedb.org/3/trending/all/week?page=" + str(page)
         response = requests.get(url, headers=headers)
         print(response)
         if response.status_code != 200:
@@ -72,4 +72,7 @@ class FeaturedContent(generics.ListAPIView):
 
         subscriptions = [subscription for subscription in subscriptions if subscription.subscription_status != "Expired"]
         out = find_trending(subscriptions)
+
+
+
         return Response(out, status=status.HTTP_200_OK)
