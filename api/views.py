@@ -455,10 +455,7 @@ class getAllUpcoming(generics.ListAPIView):
 
         # MOVIES
         url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=" + str(datetime.now().date()) + "&sort_by=popularity.desc"
-        headers = {
-            "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NWNkNTI3OWYxN2M2NTkzMTIzYzcyZDA0ZTBiZWRmYSIsInN1YiI6IjY0NDg4NTgzMmZkZWM2MDU3M2EwYjk3MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VXG36aVRaprnsBeXXhjGq6RmRRoPibEuGsjkgSB-Q-c"
-        }
+        
         response = requests.get(url, headers=headers)
         new_movies = response.json()['results']
 

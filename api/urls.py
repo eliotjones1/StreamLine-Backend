@@ -18,5 +18,5 @@ urlpatterns = [
     path('get-upcoming/', getAllUpcoming.as_view(), name='get-upcoming'),
     path('in-user-watchlist/', checkInList.as_view(), name='in-user-watchlist'),
     path('featured-content/', FeaturedContent.as_view(), name='featured-content'),
-    
+    path('service-content/', ServiceContent.as_view(), name='service-content'),
 ]
