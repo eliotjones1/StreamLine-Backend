@@ -17,21 +17,30 @@ from settings.models import *
 ####### HELPER FUNCTIONS ########
 
 def find_trending(services):
-    base_url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US&with_watch_providers='
+    movie_url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US&with_watch_providers='
+    show_url = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US&with_watch_providers='
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NWNkNTI3OWYxN2M2NTkzMTIzYzcyZDA0ZTBiZWRmYSIsInN1YiI6IjY0NDg4NTgzMmZkZWM2MDU3M2EwYjk3MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VXG36aVRaprnsBeXXhjGq6RmRRoPibEuGsjkgSB-Q-c"
     }
     temp = []
     for id in services:
-        response = requests.get(base_url + str(id), headers = headers)
-        if response.status_code != 200:
+        movie_response = requests.get(movie_url + str(id), headers = headers)
+        if movie_response.status_code != 200:
             continue  # Skip to next page on error
 
-        for item in response.json().get('results', []):
-            item['media_type'] = 'movie' if 'title' in item.keys() else 'tv'
+        for item in movie_response.json().get('results', []):
+            item['media_type'] = 'movie'
             temp.append(getData(item))
             break
+
+        tv_response = requests.get(show_url + str(id), headers = headers)
+        if tv_response.status_code != 200:
+            continue
+        for item2 in tv_response.json().get('results', []):
+            item2['media_type'] = 'tv'
+            temp.append(getData(item2))
+
     return temp
 
 
