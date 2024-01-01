@@ -29,6 +29,7 @@ def find_trending(services):
             continue  # Skip to next page on error
 
         for item in response.json().get('results', []):
+            item['media_type'] = 'movie' if 'title' in item.keys() else 'tv'
             temp.append(getData(item))
             break
     return temp
