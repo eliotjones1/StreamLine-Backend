@@ -49,7 +49,7 @@ class FeaturedContent(generics.ListAPIView):
         user = CustomUser.objects.get(email = user_email)
         subscriptions = ThirdPartySubscription.objects.filter(user=user)
 
-        subscriptions = [subscription['subscription_name'] for subscription in subscriptions if subscription.subscription_status != "Expired"]
+        subscriptions = [subscription.subscription_name for subscription in subscriptions if subscription.subscription_status != "Expired"]
         # Get subscription ids from subscription names
         df = pd.read_csv('api/random/serviceImages.csv')
         df = df[df['service_name'].isin(subscriptions)]
