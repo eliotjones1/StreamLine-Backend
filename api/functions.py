@@ -104,6 +104,8 @@ def getStreamingProviderShow(id):
     providers["flatrate"] = []
     providers["rent"] = []
     providers["buy"] = []
+    providers["free"] = []
+    providers["ads"] = []
 
     for method in US_data:
         if method == "link":
