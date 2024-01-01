@@ -166,10 +166,7 @@ class ServiceContent(generics.ListAPIView):
         media_list = user_data.media
         watchlist = getWatchlist(media_list)
         out = {}
-        print(subscriptions)
-        for id, index in enumerate(subscription_ids):
-            print(index)
-
+        for index, id in enumerate(subscription_ids):
             out[subscriptions[index]] = getServiceContent(id, subscriptions[index], watchlist)
 
         return Response(out, status = status.HTTP_200_OK)
