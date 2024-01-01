@@ -62,10 +62,18 @@ def getStreamingProviderMovie(id):
     providers["flatrate"] = []
     providers["rent"] = []
     providers["buy"] = []
+    providers["free"] = []
+    providers["ads"] = []
 
     for method in US_data:
         if method == "link":
             continue
+        if method == "free":
+            for provider in US_data[method]:
+                providers[method].append(provider["provider_name"])
+        if method == "ads":
+            for provider in US_data[method]:
+                providers[method].append(provider["provider_name"])
         if method == "flatrate":
             for provider in US_data[method]:
                 providers["flatrate"].append(provider["provider_name"])
@@ -100,6 +108,12 @@ def getStreamingProviderShow(id):
     for method in US_data:
         if method == "link":
             continue
+        if method == "free":
+            for provider in US_data[method]:
+                providers[method].append(provider["provider_name"])
+        if method == "ads":
+            for provider in US_data[method]:
+                providers[method].append(provider["provider_name"])
         if method == "flatrate":
             for provider in US_data[method]:
                 providers["flatrate"].append(provider["provider_name"])
