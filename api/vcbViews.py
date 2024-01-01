@@ -40,7 +40,8 @@ def find_trending(services):
         for item2 in tv_response.json().get('results', []):
             item2['media_type'] = 'tv'
             temp.append(getData(item2))
-
+            break
+            
     return temp
 
 
