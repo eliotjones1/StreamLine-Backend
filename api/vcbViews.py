@@ -17,25 +17,20 @@ from settings.models import *
 ####### HELPER FUNCTIONS ########
 
 def find_trending(services):
-    base_url = "https://api.themoviedb.org/3"
+    base_url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=US&with_watch_providers='
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NWNkNTI3OWYxN2M2NTkzMTIzYzcyZDA0ZTBiZWRmYSIsInN1YiI6IjY0NDg4NTgzMmZkZWM2MDU3M2EwYjk3MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VXG36aVRaprnsBeXXhjGq6RmRRoPibEuGsjkgSB-Q-c"
     }
-    trending = "/trending/all/week"
-    provider_url = "/watch/providers"
-    results = []
     temp = []
-    for _ in range(1):  # Iterate over 10 pages
-        url = "https://api.themoviedb.org/3/trending/all/week?language=en-US"
-        response = requests.get(url, headers=headers)
-        print(response)
+    for id in services:
+        response = requests.get(base_url + str(id), headers = headers)
         if response.status_code != 200:
             continue  # Skip to next page on error
 
         for item in response.json().get('results', []):
-            if len(temp) < 3:
-                temp.append(getData(item))
+            temp.append(getData(item))
+            break
     return temp
 
 
@@ -55,5 +50,13 @@ class FeaturedContent(generics.ListAPIView):
         subscriptions = ThirdPartySubscription.objects.filter(user=user)
 
         subscriptions = [subscription for subscription in subscriptions if subscription.subscription_status != "Expired"]
-        trending = find_trending(subscriptions)
+        subscriptions = list(subscriptions.values_list('subscription_name', flat=True))
+        # Get subscription ids from subscription names
+        df = pd.read_csv('api/random/serviceImages.csv')
+        df = df[df['service_name'].isin(subscriptions)]
+        subscription_ids = []
+        for subscription in subscriptions:
+            subscription_ids.append(str(df.loc[df['service_name'] == subscription]['id'].values[0]))
+
+        trending = find_trending(subscription_ids)
         return Response(trending, status=status.HTTP_200_OK)
