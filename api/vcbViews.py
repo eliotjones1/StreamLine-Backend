@@ -158,6 +158,8 @@ class ServiceContent(generics.ListAPIView):
         subscriptions = [subscription.subscription_name for subscription in subscriptions if subscription.subscription_status != "Expired"]
         # Get subscription ids from subscription names
         df = pd.read_csv('api/random/serviceImages.csv')
+        service_info = pd.read_csv('api/random/pricing - Copy of Sheet1-2.csv')
+
         df = df[df['service_name'].isin(subscriptions)]
         subscription_ids = []
         for subscription in subscriptions:
@@ -167,7 +169,11 @@ class ServiceContent(generics.ListAPIView):
         watchlist = getWatchlist(media_list)
         out = {}
         for index, id in enumerate(subscription_ids):
-            out[subscriptions[index]] = getServiceContent(id, subscriptions[index], watchlist)
+            out[subscriptions[index]] = {}
+            out[subscriptions[index]]['content'] = getServiceContent(id, subscriptions[index], watchlist)
+            link = service_info.loc[service_info['Name'] == subscriptions[index]]['Link'].values[0]
+            image = df.loc[df['service_name'] == subscriptions[index]]['logo_path'].values[0]
+            out[subscriptions[index]]['info'] = {'link':link, 'image':image}
 
         return Response(out, status = status.HTTP_200_OK)
 
