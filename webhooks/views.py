@@ -62,12 +62,14 @@ def recieveStripeWebhook(request):
             sl_sub.Basic_Expiration = None
             sl_sub.Premium = True
             sl_sub.Premium_Expiration = datetime.fromtimestamp(data["data"]["object"]["current_period_end"])
+            sl_sub.save()
         else:
             sl_sub = StreamLineSubscription.objects.get(user = user)
             sl_sub.Basic = True
             sl_sub.Basic_Expiration = datetime.fromtimestamp(data["data"]["object"]["current_period_end"])
             sl_sub.Premium = False
             sl_sub.Premium_Expiration = None
+            sl_sub.save()
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.updated":
         print(data["data"]["object"]["customer"])
