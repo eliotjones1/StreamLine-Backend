@@ -34,7 +34,7 @@ def recieveStripeWebhook(request):
         if CustomUser.objects.filter(email= data["data"]["object"]["email"]).exists():
             user = CustomUser.objects.get(email = data["data"]["object"]["email"])
             if UserStripeCustomer.objects.filter(user = user).exists():
-                temp = UserStripeCustomer.objects.filter(user = user).exists()
+                temp = UserStripeCustomer.objects.get(user = user)
                 temp.stripe_customer_id = data["data"]["object"]["id"]
                 temp.save()
                 return Response(status=status.HTTP_200_OK)
