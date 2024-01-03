@@ -76,7 +76,7 @@ def createSubscription(request):
     new_date = end_date - timedelta(days=30)
 
     new_date_str = new_date.strftime('%Y-%m-%d')
-    new_payment = UserStripePayment.objects.create(user = user, stripe_customer_id = customer.stripe_customer_id,
+    new_payment = UserStripePayment.objects.create(user = user, stripe_customer_id = customer,
                                                    date_of_payment = new_date_str, payment_amount = subscription_info['Price'],
                                                    transaction = subscription_info['Name'], transaction_status = ['pending'])
     new_payment.save()
