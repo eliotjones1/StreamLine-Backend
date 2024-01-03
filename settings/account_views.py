@@ -61,14 +61,14 @@ def createSubscription(request):
     user_email = Session.objects.get(session_key=sessionid).get_decoded()['user_email']
     if user_email is None:
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
-    subscription_info = request.data['body']
+    subscription_info = request.data
     print(subscription_info)
     # import dataframe from api/random/serviceImages.csv
     df = pd.read_csv('api/random/serviceImages.csv')
     # find image that corresponds to subscription_info['name']
-    image_path = df.loc[df['service_name'] == subscription_info['name']]['logo_path'].values[0]
+    image_path = df.loc[df['service_name'] == subscription_info['Name']]['logo_path'].values[0]
     user = CustomUser.objects.get(email=user_email)
-    this_subscription = ThirdPartySubscription.objects.create(user=user, subscription_name=subscription_info['name'], end_date=subscription_info['date'][:10], num_months=1, num_cancellations=0, subscription_price=subscription_info['price'], subscription_image_path=image_path, subscription_version=subscription_info['version'], subscription_status = "Pending")
+    this_subscription = ThirdPartySubscription.objects.create(user=user, subscription_name=subscription_info['Name'], end_date=subscription_info['End_Date'], num_months=1, num_cancellations=0, subscription_price=subscription_info['Price'], subscription_image_path=image_path, subscription_version=subscription_info['Version'], subscription_status = "Pending")
     this_subscription.save()
     return Response(SubscriptionSerializer(this_subscription).data, status=status.HTTP_200_OK)
 ## Find a way to activate this subscription on a certain date.
