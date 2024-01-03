@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import sendgrid
 from sendgrid.helpers.mail import Mail
 from rest_framework import status
-
+from .models import UserStripePayment, UserStripeCustomer
 
 
 @background(schedule=60)
@@ -27,14 +27,30 @@ def update_status(user_email):
                     subscription.save()
                 elif subscription.subscription_next_action == "renew":
                     subscription.subscription_status = 'Active'
+
+                    customer = UserStripeCustomer.objects.get(user = user)
+
+                    new_payment = UserStripePayment.objects.create(user = user, stripe_customer_id = customer.stripe_customer_id,
+                                                                   date_of_payment = subscription.end_date, payment_amount = subscription.subscription_price,
+                                                                   transaction = subscription.subscription_name, transaction_status = ['paid'])
+                    new_payment.save()
+                    
                     subscription.end_date += timedelta(days=30)
                     subscription.save()
+
+
                 else:
                     pass
         if status == "Pending":
             if date > datetime.now().date():
                 subscription.subscription_status = 'Active'
                 subscription.save()
+
+                sub_payment = UserStripePayment.objects.get(user = user, transaction = subscription.subscription_name)
+                sub_payment.transaction_status = 'paid'
+                sub_payment.save()
+
+
 
 
 @background(schedule=60)

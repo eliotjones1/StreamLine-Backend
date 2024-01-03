@@ -1,7 +1,7 @@
 from django.contrib.sessions.models import Session
 from fuzzywuzzy import process
 from rest_framework.decorators import api_view
-
+from webhooks.models import UserStripePayment, UserStripeCustomer, UserPaymentInfo
 from api.functions import *
 from api.views import isSessionActive
 from .functions import *
@@ -69,6 +69,17 @@ def createSubscription(request):
     user = CustomUser.objects.get(email=user_email)
     this_subscription = ThirdPartySubscription.objects.create(user=user, subscription_name=subscription_info['Name'], end_date=subscription_info['End_Date'], num_months=1, num_cancellations=0, subscription_price=subscription_info['Price'], subscription_image_path=image_path, subscription_version=subscription_info['Version'], subscription_status = "Pending")
     this_subscription.save()
+
+    customer = UserStripeCustomer.objects.get(user = user)
+    end_date_str = subscription_info['End_Date']
+    end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+    new_date = end_date - timedelta(days=30)
+
+    new_date_str = new_date.strftime('%Y-%m-%d')
+    new_payment = UserStripePayment.objects.create(user = user, stripe_customer_id = customer.stripe_customer_id,
+                                                   date_of_payment = new_date_str, payment_amount = subscription_info['Price'],
+                                                   transaction = subscription_info['Name'], transaction_status = ['pending'])
+    new_payment.save()
     return Response(SubscriptionSerializer(this_subscription).data, status=status.HTTP_200_OK)
 ## Find a way to activate this subscription on a certain date.
 
