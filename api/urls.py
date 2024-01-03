@@ -15,6 +15,7 @@ urlpatterns = [
     path('newly-released/', newlyReleased.as_view(), name='newly-released'),
     path('staff-picks/', StaffPicks.as_view, name='staff-picks'),
     path('search/services/', seeServices.as_view(), name='see-services'),
+    path('all-services/', AllServices.as_view(), name='all-services'),
     path('get-upcoming/', getAllUpcoming.as_view(), name='get-upcoming'),
     path('in-user-watchlist/', checkInList.as_view(), name='in-user-watchlist'),
     path('featured-content/', FeaturedContent.as_view(), name='featured-content'),
