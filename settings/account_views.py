@@ -7,7 +7,6 @@ from api.views import isSessionActive
 from .functions import *
 from .serializers import SubscriptionSerializer
 
-
 ## GOAL: Personalize our recommendations not only for TV and Movies but also for Streaming Services
 ## HOW TO DO IT: Beginning of user account subscription, ask them what kind of bundle they want, can either be
 ## One, where we recommend one service each month within budget, StreamLine, where we maximize their watchlist and minimize budget,
