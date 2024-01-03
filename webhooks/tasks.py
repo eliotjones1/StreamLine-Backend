@@ -18,7 +18,7 @@ def update_status(user_email):
         status = subscription.subscription_status
         if status == "Active":
             if date < datetime.now() + timedelta(days=7):
-                subscription.status = 'Expiring'
+                subscription.subscription_status = 'Expiring'
                 subscription.save()
         if status == "Expiring":
             if date < datetime.now():
@@ -32,14 +32,9 @@ def update_status(user_email):
                 else:
                     pass
         if status == "Pending":
-            print(subscription.subscription_name)
-            print(status)
-            print(date)
-            print(datetime.now().date())
             if date < datetime.now().date():
-                subscription.status = 'Active'
+                subscription.subscription_status = 'Active'
                 subscription.save()
-                print(subscription.status)
 
 
 @background(schedule=60)
