@@ -60,3 +60,5 @@ def send_cancellation_reminders(user_email, subscription):
         print(str(e))
         pass
 
+### FIGURE STUFF OUT FOR BASIC SUBSCRIPTION FIRST
+### ADD PAYMENTS BASED ON THIRD PARTY SUBSCRIPTIONS

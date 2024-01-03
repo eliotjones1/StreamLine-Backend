@@ -1,3 +1,5 @@
+import math
+
 from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.decorators import api_view
@@ -118,4 +120,6 @@ class getPaymentsMade(generics.ListAPIView):
                 "accountNumber": card["last4"],
                 "expiry": str(card["exp_month"]) + "/" + str(card["exp_year"]),
             })
-        return Response(output, status=status.HTTP_200_OK)
+        return_dict = {'payments': output, "numPages": math.ceil(len(payments) / 6)}
+        return Response(return_dict, status=status.HTTP_200_OK)
+
