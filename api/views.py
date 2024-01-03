@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from fuzzywuzzy import fuzz
 from rest_framework.decorators import api_view
 
 from authentication.models import CustomUser
