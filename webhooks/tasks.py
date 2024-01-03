@@ -32,7 +32,7 @@ def update_status(user_email):
                 else:
                     pass
         if status == "Pending":
-            if date < datetime.now().date():
+            if date > datetime.now().date():
                 subscription.status = 'Active'
                 subscription.save()
 
