@@ -60,7 +60,7 @@ def createSubscription(request):
     user_email = Session.objects.get(session_key=sessionid).get_decoded()['user_email']
     if user_email is None:
         return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
-    subscription_info = request.data
+    subscription_info = request.data['body']
     print(subscription_info)
     # import dataframe from api/random/serviceImages.csv
     df = pd.read_csv('api/random/serviceImages.csv')
@@ -78,7 +78,7 @@ def createSubscription(request):
     new_date_str = new_date.strftime('%Y-%m-%d')
     new_payment = UserStripePayment.objects.create(user = user, stripe_customer_id = customer,
                                                    date_of_payment = new_date_str, payment_amount = subscription_info['Price'],
-                                                   transaction = subscription_info['Name'], transaction_status = ['pending'])
+                                                   transaction = subscription_info['Name'], transaction_status = 'pending')
     new_payment.save()
     return Response(SubscriptionSerializer(this_subscription).data, status=status.HTTP_200_OK)
 ## Find a way to activate this subscription on a certain date.
