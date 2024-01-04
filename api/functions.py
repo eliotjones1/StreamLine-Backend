@@ -325,7 +325,7 @@ def optimize1(providers, prices, services, budget, data):
         for object in data:
             if media == object["title"]:
                 output["Type"].append(object["media_type"])
-
+    output["Total_Cost"] = round(output["Total_Cost"], 7)
     realOutput = getServiceImages(output)
     return realOutput
 
