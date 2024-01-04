@@ -79,7 +79,7 @@ def recieveStripeWebhook(request):
         template_id = "d-57f98ea68557417bbcb5b5a0ee77af46"
         message = Mail(
             from_email='ekj0512@gmail.com',
-            to_emails=user,
+            to_emails=customer.user.email,
         )
         message.template_id = template_id
         try:
