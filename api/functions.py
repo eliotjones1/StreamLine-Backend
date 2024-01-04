@@ -278,28 +278,34 @@ def optimize1(providers, prices, services, budget, data):
 
     objective = cp.sum(1 - cp.vstack([x[m] for m in watchlist]))
 
-    constraints = [
-        cp.sum(cp.vstack([y[s] * prices[s] for s in services])) <= budget,
-    ]
-    for m in providers:
-        print(m)
-        print(providers[m])
-        constraints += [x[m] <= cp.sum(cp.vstack([y[s] for s in providers[m]]))]
-        for s in services:
-            if s in providers[m]:
-                constraints += [y[s] <= cp.sum(cp.vstack([x[m] for m in providers]))]
-    problem = cp.Problem(cp.Minimize(objective), constraints)
+    # constraints = [
+    #     cp.sum(cp.vstack([y[s] * prices[s] for s in services])) <= budget,
+    # ]
+    # for m in providers:
+    #     constraints += [x[m] <= cp.sum(cp.vstack([y[s] for s in providers[m]]))]
+    #     for s in services:
+    #         if s in providers[m]:
+    #             constraints += [y[s] <= cp.sum(cp.vstack([x[m] for m in providers]))]
+    # problem = cp.Problem(cp.Minimize(objective), constraints)
+    budget_constraint = [cp.sum(cp.hstack([y[s] * prices[s] for s in services])) <= budget]
+    provider_service_constraints = [x[m] <= cp.sum([y[s] for s in providers[m]]) for m in providers]
+    service_provider_constraints = [y[s] <= cp.sum([x[m] for m in providers if s in providers[m]]) for s in services]
+    constraints = budget_constraint + provider_service_constraints + service_provider_constraints
+    objective = cp.Maximize(cp.sum(x.values()))
+    problem = cp.Problem(objective, constraints)
     problem.solve()
-
-    watch_opt = []
-    stream_opt = []
-    for m in watchlist:
-        if x[m].value == 1:
-            watch_opt.append(m)
-    for s in services:
-        if y[s].value == 1:
-            stream_opt.append(s)
-
+    watch_opt = [m for m in x if x[m].value > 0.5]
+    stream_opt = [s for s in y if y[s].value > 0.5]
+    # watch_opt = []
+    # stream_opt = []
+    # for m in watchlist:
+    #     if x[m].value == 1:
+    #         watch_opt.append(m)
+    # for s in services:
+    #     if y[s].value == 1:
+    #         stream_opt.append(s)
+    print(watch_opt)
+    print(stream_opt)
     z = {m: cp.Variable(boolean=True) for m in watch_opt}
     w = {s: cp.Variable(boolean=True) for s in stream_opt}
 
