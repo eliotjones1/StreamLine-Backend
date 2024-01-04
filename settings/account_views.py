@@ -235,7 +235,7 @@ def generateBundle(request):
     realOutput = getServiceImages(output)
     print(realOutput)
     user_data.bundle = [realOutput]
-    user_data.budget = realOutput["Total_Cost"]
+    user_data.budget = round(realOutput["Total_Cost"], 7)
     user_data.save()
     return Response(status=status.HTTP_200_OK)
 
