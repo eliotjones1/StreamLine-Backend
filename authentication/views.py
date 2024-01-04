@@ -78,12 +78,12 @@ class AuthViewSet(viewsets.GenericViewSet):
         # Send Welcome Email
         template_id = "d-65eff9edfd4f47e493b649f54bb336f6"
         message = Mail(
-        from_email='ekj0512@gmail.com',
-        to_emails=user,
+            from_email='ekj0512@gmail.com',
+            to_emails=user,
         )
         message.template_id = template_id
         try:
-            sg = sendgrid.SendGridAPIClient(api_key='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')  # Replace with your SendGrid API key
+            sg = sendgrid.SendGridAPIClient(api_key='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')
             response = sg.send(message)
             print(response)
             if response.status_code == 202:
@@ -97,7 +97,6 @@ class AuthViewSet(viewsets.GenericViewSet):
         response.set_cookie('sessionid', session.session_key, httponly=True, samesite='None', secure=True)
         print(response.cookies)
         return response
-
 
     @action(methods=['POST', ], detail=False)
     def logout(self, request):

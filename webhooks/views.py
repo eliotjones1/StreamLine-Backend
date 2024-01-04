@@ -1,5 +1,6 @@
 import math
 
+import sendgrid
 from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.decorators import api_view
@@ -7,6 +8,8 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 import json
 import stripe
+from sendgrid import Mail
+
 from .models import *
 from datetime import datetime
 from settings.models import StreamLineSubscription
@@ -72,6 +75,24 @@ def recieveStripeWebhook(request):
             sl_sub.Premium = False
             sl_sub.Premium_Expiration = None
             sl_sub.save()
+
+        template_id = "d-57f98ea68557417bbcb5b5a0ee77af46"
+        message = Mail(
+            from_email='ekj0512@gmail.com',
+            to_emails=user,
+        )
+        message.template_id = template_id
+        try:
+            sg = sendgrid.SendGridAPIClient(api_key='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')
+            response = sg.send(message)
+            print(response)
+            if response.status_code == 202:
+                pass
+            else:
+                return Response({})
+        except Exception as e:
+                print(str(e))
+                pass
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.updated":
         print(data["data"]["object"]["customer"])
@@ -89,7 +110,6 @@ def recieveStripeWebhook(request):
         customer.delete()
         return Response(status=status.HTTP_200_OK)
     else:
-        print(payload)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class getPaymentsMade(generics.ListAPIView):
