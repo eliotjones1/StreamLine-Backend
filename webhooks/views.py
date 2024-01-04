@@ -89,9 +89,13 @@ def recieveStripeWebhook(request):
     elif event.type == "customer.subscription.deleted":
         customer = UserStripeCustomer.objects.get(stripe_customer_id = data["data"]["object"]["customer"])
         user = CustomUser.objects.get(email = customer.user.email)
-        subscription = UserStripePayment.objects.get(user = user, stripe_customer_id = customer)
-        subscription.delete()
         customer.delete()
+        sl_sub = StreamLineSubscription.objects.get(user = user)
+        sl_sub.Basic = False
+        sl_sub.Basic_Expiration = None
+        sl_sub.Premium = False
+        sl_sub.Premium_Expiration = None
+        sl_sub.save()
         return Response(status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
