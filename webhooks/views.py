@@ -1,5 +1,6 @@
 import math
 
+import pandas as pd
 import sendgrid
 from django.shortcuts import render
 from rest_framework import generics, status
@@ -76,23 +77,6 @@ def recieveStripeWebhook(request):
             sl_sub.Premium_Expiration = None
             sl_sub.save()
 
-        template_id = "d-57f98ea68557417bbcb5b5a0ee77af46"
-        message = Mail(
-            from_email='ekj0512@gmail.com',
-            to_emails=customer.user.email,
-        )
-        message.template_id = template_id
-        try:
-            sg = sendgrid.SendGridAPIClient(api_key='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')
-            response = sg.send(message)
-            print(response)
-            if response.status_code == 202:
-                pass
-            else:
-                return Response({})
-        except Exception as e:
-                print(str(e))
-                pass
         return Response(status=status.HTTP_200_OK)
     elif event.type == "customer.subscription.updated":
         print(data["data"]["object"]["customer"])
@@ -128,10 +112,11 @@ class getPaymentsMade(generics.ListAPIView):
         payment_info = UserPaymentInfo.objects.get(user = user)
         card = ast.literal_eval(payment_info.stripe_payment_info) 
         output = []
+        df = pd.read_csv('api/random/serviceImages.csv')
         for payment in payments:
             print(payment)
             output.append({
-                "img": "",
+                "img": df.loc[df['service_name'] == payment[5]]['logo_path'].values[0] if payment[5] != "StreamLine" else "",
                 "name": payment[5],
                 "amount": payment[4],
                 "date": payment[3],
