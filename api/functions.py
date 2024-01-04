@@ -291,8 +291,7 @@ def optimize1(providers, prices, services, budget, data):
     provider_service_constraints = [x[m] <= cp.sum([y[s] for s in providers[m]]) for m in providers]
     service_provider_constraints = [y[s] <= cp.sum([x[m] for m in providers if s in providers[m]]) for s in services]
     constraints = budget_constraint + provider_service_constraints + service_provider_constraints
-    objective = cp.Maximize(cp.sum(x.values()))
-    problem = cp.Problem(objective, constraints)
+    problem = cp.Problem(cp.Minimize(objective), constraints)
     problem.solve()
     watch_opt = [m for m in x if x[m].value > 0.5]
     stream_opt = [s for s in y if y[s].value > 0.5]
