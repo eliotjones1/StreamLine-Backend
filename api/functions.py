@@ -278,17 +278,18 @@ def optimize1(providers, prices, services, budget, data):
 
     objective = cp.sum(1 - cp.vstack([x[m] for m in watchlist]))
 
+    print(providers)
+    print(services)
 
     constraints = [
         cp.sum(cp.vstack([y[s] * prices[s] for s in services])) <= budget,
     ]
-    M = 1000
     for m in providers:
-        constraints += [M * x[m] <= cp.sum(cp.vstack([y[s] for s in providers[m]]))]
+        constraints += [x[m] <= cp.sum(cp.vstack([y[s] for s in providers[m]]))]
         for s in services:
             if s in providers[m]:
                 constraints += [y[s] <= cp.sum(cp.vstack([x[m] for m in providers]))]
-
+    print(constraints)
     problem = cp.Problem(cp.Minimize(objective), constraints)
     problem.solve()
     watch_opt = []
