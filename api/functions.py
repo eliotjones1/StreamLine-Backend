@@ -307,6 +307,8 @@ def optimize1(providers, prices, services, budget, data):
     constraints = [
         cp.sum(cp.vstack([w[s] * prices[s] for s in stream_opt])) <= budget
     ]
+    print(watch_opt)
+    print(stream_opt)
     for m in watch_opt:
         constraints.append(cp.sum(cp.vstack([w[s] for s in stream_opt if s in providers[m]])) >= z[m])
         constraints.append(z[m] == 1)
