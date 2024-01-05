@@ -63,7 +63,11 @@ class AuthViewSet(viewsets.GenericViewSet):
         # create user subscription
         user_subscription = StreamLineSubscription(user = user_exists, Premium = False, Basic = False, Premium_Expiration = None, Basic_Expiration = None, stripe_customer_id = None, stripe_subscription_id = None)
         user_subscription.save()
-        
+
+
+        user_stripe = UserStripeCustomer(user = user_exists, stripe_customer_id = "")
+        user_stripe.save()
+
         session = SessionStore()
         session['user'] = user
         session.save()
