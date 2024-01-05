@@ -111,7 +111,7 @@ def getServiceContent(subscription_id, subscription_name, watchlist):
     # In watchlist
     return_dict["In_Watchlist"] = []
     for item in watchlist:
-        if streaming_providers == []:
+        if item['streaming_providers'] == []:
             continue
         streaming_providers = set(item['streaming_providers']['free'] + item['streaming_providers']['ads'] + item['streaming_providers']['flatrate'])
         if subscription_name in streaming_providers:
