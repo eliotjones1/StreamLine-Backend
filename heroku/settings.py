@@ -149,11 +149,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SECURE = False
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://sl-subscriptions.netlify.app']
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Your frontend domain in development
     "http://localhost:4173",  # Your frontend domain in publish
+    'http://sl-subscriptions.netlify.app',
 ]
 
 REST_FRAMEWORK = {
