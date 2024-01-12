@@ -16,8 +16,6 @@ def create_user_account(email, password, first_name="",
     )
     user.set_password(password)
     user.is_active = True
-    user.is_staff = True
-    user.is_superuser = True
     user.save()
     return user
     # user = get_user_model().objects.create_user(
